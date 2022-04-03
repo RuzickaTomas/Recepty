@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	version="3.1">
+	<display-name>recepty</display-name>
+	<servlet>
+		<servlet-name>FacesServlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FacesServlet</servlet-name>
+		<url-pattern>*.xhtml</url-pattern>
+	</servlet-mapping>
+	<welcome-file-list>
+		<welcome-file>index.xhtml</welcome-file>
+	</welcome-file-list>
+	<data-source>
+		<name>java:app/myDS</name>
+		<class-name>com.mysql.jdbc.Driver</class-name>
+		<server-name>localhost</server-name>
+		<database-name>test</database-name>
+		<user>root</user>
+		<password>admin123</password>
+		<transactional>true</transactional>
+		<isolation-level>TRANSACTION_READ_COMMITTED</isolation-level>
+		<initial-pool-size>2</initial-pool-size>
+		<max-pool-size>10</max-pool-size>
+		<min-pool-size>5</min-pool-size>
+		<max-statements>0</max-statements>
+	</data-source>
+</web-app>
