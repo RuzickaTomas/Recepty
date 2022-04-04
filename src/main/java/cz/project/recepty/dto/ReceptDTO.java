@@ -4,7 +4,6 @@
  */
 package cz.project.recepty.dto;
 
-import java.net.URL;
 import java.util.List;
 import java.util.Objects;
 
@@ -36,6 +35,14 @@ public class ReceptDTO {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    
     public List<String> getPictures() {
         return pictures;
     }

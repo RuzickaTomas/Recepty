@@ -13,6 +13,7 @@
         <h:form>
             <h:inputText value="#{recepty.recept.name}"/>
             <h:inputTextarea value="#{recepty.recept.description}" />
+            <h:commandButton actionListener="#{recepty.save()}">Uložit</h:commandButton>
         </h:form>
 
         <h:dataTable value="#{recepty.getRecepty}" var="r">
