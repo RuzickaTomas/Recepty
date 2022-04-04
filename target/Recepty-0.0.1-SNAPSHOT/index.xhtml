@@ -10,6 +10,10 @@
     </h:head>
     <h:body>
         <h2>JSF 2.0 Hello World Example - welcome.xhtml</h2>
+        <h:form>
+            <h:inputText value="#{recepty.recept.name}"/>
+            <h:inputTextarea value="#{recepty.recept.description}" />
+        </h:form>
 
         <h:dataTable value="#{recepty.getRecepty}" var="r">
             <h:column>  

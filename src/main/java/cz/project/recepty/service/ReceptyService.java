@@ -6,6 +6,7 @@ package cz.project.recepty.service;
 
 import cz.project.recepty.beans.Recept;
 import cz.project.recepty.dao.ReceptyDAO;
+import cz.project.recepty.dto.ReceptDTO;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.ManagedBean;
@@ -23,6 +24,20 @@ public class ReceptyService implements Serializable {
   
     @Inject
     private ReceptyDAO receptyDao;
+    
+    private ReceptDTO recept;
+    
+    public ReceptyService() {
+        this.recept = new ReceptDTO();
+    }
+
+    public ReceptDTO getRecept() {
+        return recept;
+    }
+
+    public void setRecept(ReceptDTO recept) {
+        this.recept = recept;
+    }
     
     public List<Recept> getRecepty() {
         return receptyDao.getRecepts();
