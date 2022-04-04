@@ -1,15 +1,16 @@
 package cz.project.recepty.beans;
 
+import java.io.Serializable;
 import java.net.URL;
 import java.util.List;
 import java.util.Objects;
 
-public class Recept {
+public class Recept implements Serializable{
 	
-	public Long id;
-	public String name;
-	public String description;
-	public final List<URL> pictures;
+	private Long id;
+	private String name;
+	private String description;
+	private final List<URL> pictures;
 
 	public Recept(Long id, String name, String description, final List<URL> pictures) {
 		this.id = id;

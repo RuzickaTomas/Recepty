@@ -4,18 +4,21 @@
  */
 package cz.project.recepty.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.servlet.http.Part;
 
 /**
  *
  */
 public class ReceptDTO {
 
-    public Long id;
-    public String name;
-    public String description;
-    public List<String> pictures;
+    private Long id;
+    private String name;
+    private String description;
+    private Part files;
+    private final List<String> pictures = new ArrayList<>();
     
     public ReceptDTO() {}
 
@@ -47,10 +50,15 @@ public class ReceptDTO {
         return pictures;
     }
 
-    public void setPictures(List<String> pictures) {
-        this.pictures = pictures;
+    public Part getFiles() {
+        return this.files;
     }
 
+    public void setFiles(Part files) {
+        this.files = files;
+    }
+   
+    
     @Override
     public int hashCode() {
         int hash = 7;

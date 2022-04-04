@@ -3,7 +3,8 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"    
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 
     <h:head>
         <title>JSF 2.0 Hello World</title>
@@ -13,6 +14,7 @@
         <h:form>
             <h:inputText value="#{recepty.recept.name}"/>
             <h:inputTextarea value="#{recepty.recept.description}" />
+            <h:inputFile value="#{recepty.recept.files}" a:multiple="true" />
             <h:commandButton actionListener="#{recepty.save()}">Uložit</h:commandButton>
         </h:form>
 
