@@ -6,10 +6,10 @@ import cz.project.recepty.beans.Recept;
 
 public interface ReceptyDAO {
 
-	//insert nebo update podle toho zda máme id
-	public boolean save(Recept recept);
-	//získej objekt na základì id
+	//insert nebo update podle toho zda mï¿½me id
+	public long save(Recept recept);
+	//zï¿½skej objekt na zï¿½kladï¿½ id
 	public Recept getRecept(long id);
-	//získej všechny recepty
+	//zï¿½skej vï¿½echny recepty
 	public List<Recept> getRecepts();
 }

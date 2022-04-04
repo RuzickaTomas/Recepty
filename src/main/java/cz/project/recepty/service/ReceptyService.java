@@ -5,7 +5,9 @@
 package cz.project.recepty.service;
 
 import cz.project.recepty.beans.FilesRetriever;
+import cz.project.recepty.beans.Obrazek;
 import cz.project.recepty.beans.Recept;
+import cz.project.recepty.dao.ObrazkyDAO;
 import cz.project.recepty.dao.ReceptyDAO;
 import cz.project.recepty.dto.ReceptDTO;
 import jakarta.faces.context.FacesContext;
@@ -44,6 +46,11 @@ public class ReceptyService implements Serializable {
     @Inject
     private ReceptyDAO receptyDao;
 
+    @Inject
+    private ObrazkyDAO obrazkyDao;
+
+    private Part pictures;
+
     private ReceptDTO recept;
 
     private final Logger logger = Logger.getLogger(ReceptyService.class.getName());
@@ -60,10 +67,18 @@ public class ReceptyService implements Serializable {
         this.recept = recept;
     }
 
+    public Part getPictures() {
+        return pictures;
+    }
+
+    public void setPictures(Part pictures) {
+        this.pictures = pictures;
+    }
+
     public void save() {
-        uploadFiles();
-        boolean result = receptyDao.save(transform(recept));
-        if (result) {
+        long result = receptyDao.save(transform(recept));
+        if (result > 0) {
+            uploadFiles(result);
             logger.log(Level.INFO, ">>OK<<");
         }
         recept = new ReceptDTO();
@@ -73,33 +88,26 @@ public class ReceptyService implements Serializable {
         return receptyDao.getRecepts();
     }
 
-    private void uploadFiles() {
-        final Part files = recept.getFiles();
+    private void uploadFiles(Long receptId) {
         try {
-            recept.getPictures().clear();
-            for (Part f : FilesRetriever.getAllParts(files)) {
+            for (Part f : FilesRetriever.getAllParts(pictures)) {
                 final String fileName = f.getSubmittedFileName();
-                recept.getPictures().add( "http://localhost:8080/Recepty/pictures" + fileName);
-                InputStream input =  f.getInputStream();                
+                var picture = new Obrazek();
+                picture.setId(0);
+                picture.setPath("http://localhost:8080/Recepty/pictures" + fileName);
+                picture.setRecept_id(0);
+                InputStream input = f.getInputStream();
                 Files.copy(input, Paths.get(new URI("../pictures/" + fileName)), StandardCopyOption.REPLACE_EXISTING);
+                obrazkyDao.save(picture);
             }
-        } catch(URISyntaxException | ServletException | IOException e) {
+        } catch (URISyntaxException | ServletException | IOException e) {
             e.printStackTrace();
         }
         recept.setFiles(null);
     }
 
     public Recept transform(ReceptDTO from) {
-        final List<URL> urls = new ArrayList<>();
-        for (String pictureUrl : from.getPictures()) {
-            try {
-                urls.add(new URL(pictureUrl));
-            } catch (MalformedURLException ex) {
-                logger.log(Level.SEVERE, null, ex);
-            }
-
-        }
-        Recept to = new Recept(from.getId(), from.getName(), from.getDescription(), urls);
+        Recept to = new Recept(from.getId(), from.getName(), from.getDescription());
         return to;
     }
 

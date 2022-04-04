@@ -1,4 +1,5 @@
 cz/project/recepty/beans/Recept.class
+cz/project/recepty/beans/FilesRetriever.class
 cz/project/recepty/dao/ReceptyDAO.class
 cz/project/recepty/dto/ReceptDTO.class
 cz/project/recepty/service/ReceptyService.class

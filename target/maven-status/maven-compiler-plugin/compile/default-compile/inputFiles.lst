@@ -1,5 +1,6 @@
 /home/tomas/Dokumenty/Recepty/src/main/java/cz/project/recepty/dao/ReceptyDAOImpl.java
 /home/tomas/Dokumenty/Recepty/src/main/java/cz/project/recepty/dao/ReceptyDAO.java
 /home/tomas/Dokumenty/Recepty/src/main/java/cz/project/recepty/service/ReceptyService.java
+/home/tomas/Dokumenty/Recepty/src/main/java/cz/project/recepty/beans/FilesRetriever.java
 /home/tomas/Dokumenty/Recepty/src/main/java/cz/project/recepty/beans/Recept.java
 /home/tomas/Dokumenty/Recepty/src/main/java/cz/project/recepty/dto/ReceptDTO.java
