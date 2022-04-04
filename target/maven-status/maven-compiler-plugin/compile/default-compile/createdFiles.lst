@@ -1,0 +1,4 @@
+cz/project/recepty/beans/Recept.class
+cz/project/recepty/dao/ReceptyDAO.class
+.netbeans_automatic_build
+cz/project/recepty/dao/ReceptyDAOImpl.class

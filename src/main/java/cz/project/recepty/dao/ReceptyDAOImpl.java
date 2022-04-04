@@ -16,11 +16,21 @@ import javax.sql.DataSource;
 
 import cz.project.recepty.beans.Recept;
 
+
+/**
+ * 
+ * Třída zajišťující spojení mezi tabulkou recepty 
+ */
 public class ReceptyDAOImpl implements ReceptyDAO {
 
 	@Resource(lookup = "java:app/myDS")
 	private DataSource dataSource;
 
+        /**
+         * Uloží předaný objekt recept a v závislosti na hodnotě id vytvoří nový záznam, nebo změní stávající
+         * @param recept
+         * @return boolean podle toho jestli se uložení povedlo či nikoliv
+         */
 	@Override
 	public boolean save(Recept recept) {
 		final String insertSql = "insert into recept (id, name, description, pictures) values (? , ?, ?, ?)";
@@ -63,6 +73,11 @@ public class ReceptyDAOImpl implements ReceptyDAO {
 		return result;
 	}
 
+        /**
+         * Vrátí záznam podle id
+         * @param id
+         * @return Recept
+         */
 	@Override
 	public Recept getRecept(long id) {
 		Recept recept = null;
@@ -103,6 +118,11 @@ public class ReceptyDAOImpl implements ReceptyDAO {
 		return recept;
 	}
 
+        
+        /**
+         * Vrátí všechny existující záznamy z tabulky recept
+         * @return List<Recept>
+         */
 	@Override
 	public List<Recept> getRecepts() {
 		final List<Recept> recepts = new ArrayList<>();
