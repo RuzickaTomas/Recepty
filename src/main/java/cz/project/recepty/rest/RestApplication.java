@@ -13,13 +13,17 @@ import javax.ws.rs.core.Application;
  *
  * @author tomas
  */
-
 @ApplicationPath("/rest/v1")
 public class RestApplication extends Application {
-    
-    	private Set<Class<?>> empty = new HashSet<>();
-        
-        public RestApplication() {
-            empty.add(ReceptyResource.class);
-        }
+
+    private Set<Class<?>> empty = new HashSet<>();
+
+    public RestApplication() {
+        empty.add(ReceptyResource.class);
+    }
+
+    public Set<Class<?>> getClasses() {
+        return empty;
+    }
+
 }
