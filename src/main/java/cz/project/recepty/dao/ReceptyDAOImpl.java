@@ -1,5 +1,6 @@
 package cz.project.recepty.dao;
 
+import com.mysql.cj.jdbc.MysqlDataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,10 +9,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Resource;
-import javax.sql.DataSource;
 
 import cz.project.recepty.beans.Recept;
+import cz.project.recepty.ds.Connector;
 
 /**
  *
@@ -19,9 +19,11 @@ import cz.project.recepty.beans.Recept;
  */
 public class ReceptyDAOImpl implements ReceptyDAO {
 
-    @Resource(lookup = "java:app/myDS")
-    private DataSource dataSource;
+    private final MysqlDataSource dataSource = Connector.getInstance().getDataSource();
 
+    
+    public ReceptyDAOImpl() {
+    }
     /**
      * Uloží předaný objekt recept a v závislosti na hodnotě id vytvoří nový
      * záznam, nebo změní stávající
@@ -31,20 +33,20 @@ public class ReceptyDAOImpl implements ReceptyDAO {
      */
     @Override
     public long save(Recept recept) {
-        final String insertSql = "insert into recept (id, name, description, pictures) values (? , ?, ?, ?)";
-        final String updateSql = "update recept set id = ?, name = ?, description = ?, pictures = ?";
+        final String insertSql = "insert into recept (id, name, description) values (?, ?, ?)";
+        final String updateSql = "update recept set id = ?, name = ?, description = ?";
         long result = 0L;
         PreparedStatement statement = null;
         try ( Connection connect = dataSource.getConnection()) {
             connect.beginRequest();
             if (recept.getId() != null) {
                 statement = connect.prepareStatement(updateSql);
-                statement.setLong(1, recept.getId());
+                statement.setInt(1, recept.getId().intValue());
                 statement.setString(2, recept.getName());
                 statement.setString(3, recept.getDescription());
             } else {
                 statement = connect.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS);
-                statement.setLong(1, recept.getId());
+                statement.setObject(1, recept.getId());
                 statement.setString(2, recept.getName());
                 statement.setString(3, recept.getDescription());
             }
@@ -89,7 +91,7 @@ public class ReceptyDAOImpl implements ReceptyDAO {
                 if (result.first()) {
                     final long idKey = result.getLong("id");
                     final String name = result.getString("name");
-                    final String description = result.getString("desription");
+                    final String description = result.getString("description");
                     recept = new Recept(idKey, name, description);
                 }
             }
@@ -124,7 +126,8 @@ public class ReceptyDAOImpl implements ReceptyDAO {
                 while (result.next()) {
                     final long idKey = result.getLong("id");
                     final String name = result.getString("name");
-                    final String description = result.getString("desription");
+                    final String description = result.getString("description");
+                    recepts.add(new Recept(idKey, name, description));
                 }
             }
             connect.endRequest();

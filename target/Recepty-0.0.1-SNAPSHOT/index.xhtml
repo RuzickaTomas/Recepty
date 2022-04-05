@@ -11,14 +11,14 @@
     </h:head>
     <h:body>
         <h2>JSF 2.0 Hello World Example - welcome.xhtml</h2>
-        <h:form>
+        <h:form enctype="multipart/form-data">
             <h:inputText value="#{recepty.recept.name}"/>
             <h:inputTextarea value="#{recepty.recept.description}" />
-            <h:inputFile value="#{recepty.pictures}" a:multiple="true" />
-            <h:commandButton actionListener="#{recepty.save()}">Uložit</h:commandButton>
+            <h:inputFile  value="#{recepty.pictures}" a:multiple="true" />
+            <h:commandButton actionListener="#{recepty.save()}" value="Uložit"></h:commandButton>
         </h:form>
 
-        <h:dataTable value="#{recepty.getRecepty}" var="r">
+        <h:dataTable value="#{recepty.getRecepty()}" var="r">
             <h:column>  
                 <f:facet name="header">ID</f:facet>  
                 <h:outputText value="#{r.id}"/>  

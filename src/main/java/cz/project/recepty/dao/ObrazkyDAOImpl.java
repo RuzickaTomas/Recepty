@@ -1,6 +1,8 @@
 package cz.project.recepty.dao;
 
+import com.mysql.cj.jdbc.MysqlDataSource;
 import cz.project.recepty.beans.Obrazek;
+import cz.project.recepty.ds.Connector;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,8 +21,7 @@ import java.sql.Statement;
  */
 public class ObrazkyDAOImpl implements ObrazkyDAO {
 
-    @Resource(lookup = "java:app/myDS")
-    private DataSource dataSource;
+    private final MysqlDataSource dataSource = Connector.getInstance().getDataSource();
 
     /**
      * Uloží předaný objekt recept a v závislosti na hodnotě id vytvoří nový
@@ -31,26 +32,28 @@ public class ObrazkyDAOImpl implements ObrazkyDAO {
      */
     @Override
     public long save(Obrazek obr) {
-        final String insertSql = "insert into picture (id, path) values (? ,?)";
-        final String updateSql = "update picture set id = ?, path = ?";
+        final String insertSql = "insert into picture (id, path, recept_id) values (? ,?, ?)";
+        final String updateSql = "update picture set id = ?, path = ?, recept_id = ?";
         long result = 0L;
         PreparedStatement statement = null;
         try ( Connection connect = dataSource.getConnection()) {
             connect.beginRequest();
-            if (obr.getId() != 0L) {
+            if (obr.getId() != null) {
                 statement = connect.prepareStatement(updateSql);
                 statement.setLong(1, obr.getId());
                 statement.setString(2, obr.getPath());
+                statement.setLong(3, obr.getRecept_id());
             } else {
                 statement = connect.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS);
-                statement.setLong(1, obr.getId());
+                statement.setObject(1, obr.getId());
                 statement.setString(2, obr.getPath());
+                statement.setLong(3, obr.getRecept_id());
             }
             statement.execute();
 
             try ( ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                     result =  generatedKeys.getLong(1);
+                    result = generatedKeys.getLong(1);
                 } else {
                     throw new SQLException("Saving picture failed, no ID obtained.");
                 }
