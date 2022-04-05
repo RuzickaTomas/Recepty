@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+	<title>JSF 2.0 Hello World</title>
+</h:head>
+<h:body>
+	<style>
+#container {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+#createReceptForm {
+	display: flex;
+	flex-direction: column;
+	border: 1p solid gray;
+}
+</style>
+<h:form>
+<h:commandLink action="index">Zpet</h:commandLink>
+</h:form>
+	<div id="container">
+		<h:form id="createReceptForm" enctype="multipart/form-data">
+			<h:outputLabel>Název</h:outputLabel>
+			<h:inputText value="#{recepty.recept.name}" />
+			<h:outputLabel>Popis</h:outputLabel>
+			<h:inputTextarea value="#{recepty.recept.description}" />
+			<h:outputLabel>Obrázky</h:outputLabel>
+			<h:inputFile value="#{recepty.pictures}" a:multiple="true" />
+			<h:commandButton actionListener="#{recepty.save()}" value="Uložit"></h:commandButton>
+		</h:form>
+	</div>
+</h:body>
+</html>
