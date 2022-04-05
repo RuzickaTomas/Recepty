@@ -4,7 +4,7 @@ cz/project/recepty/service/ReceptyService.class
 cz/project/recepty/dao/ReceptyDAOImpl.class
 cz/project/recepty/ds/Connector.class
 cz/project/recepty/dao/ReceptyDAO.class
-cz/project/recepty/rest/ReceptyResource.class
+cz/project/recepty/rest/ObrazkyResource.class
 cz/project/recepty/dao/ObrazkyDAOImpl.class
 cz/project/recepty/dao/ObrazkyDAO.class
 cz/project/recepty/beans/Obrazek.class

@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"    
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <h:head>
         <title>JSF 2.0 Hello World</title>
@@ -18,15 +19,81 @@
             <h:commandButton actionListener="#{recepty.save()}" value="Uložit"></h:commandButton>
         </h:form>
 
-        <h:dataTable value="#{recepty.getRecepty()}" var="r">
-            <h:column>  
-                <f:facet name="header">ID</f:facet>  
-                <h:outputText value="#{r.id}"/>  
-            </h:column>  
-            <h:column>  
-                <f:facet name="header">Název</f:facet>  
-                <h:outputText value="#{r.name}"/>  
-            </h:column>
-        </h:dataTable>
+        <style>
+            #recepts {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+               
+            }
+
+            #cards {
+                display: grid;
+                column-gap: 15px;
+                grid-template-columns: 490px 490px 490px 490px;
+            }
+
+            .card {
+                margin:5px;
+                padding:3px;
+                display: flex;
+                flex-direction: column;
+                width: 490px;
+                height:400px;
+                border: 1px solid gray;
+
+            }
+
+            #picture {
+                padding-left: 8px;
+                background-color: black;
+                margin: 0 auto;
+            }
+            #ledge {
+                display: grid;
+                grid-template-columns: 410px 80px;
+                height: 90px;
+            }
+            #remove {
+                width: 79px;
+                height: 79px;
+                text-align: center;
+                background-color: red;
+                font-size: 60px;
+                color: white;
+            }
+
+            #remove:after {
+                display: flex;
+                justify-content: center;
+                display: inline-block;
+                content: "\00d7";
+            }
+
+            #name {
+                padding-left: 8px;
+                height: 20px;
+                width: 490px;
+            }
+
+
+
+
+        </style>
+        <div id="recepts">
+            <h:form id="cards">
+                <ui:repeat value="#{recepty.getRecepty()}" var="r">
+                    <div class="card">
+                        <img id="picture" src="#{recepty.getPicture(r)}" alt="#{r.id}" width="480" height="320"/>
+                        <div id="ledge">
+                            <h:outputText id="name"  value="#{r.name}"/>  
+                            <h:commandLink  actionListener="#{recepty.remove(r)}">
+                                <div id="remove"></div>
+                            </h:commandLink> 
+                        </div>
+                    </div>
+                </ui:repeat>
+            </h:form>
+        </div>
     </h:body>
 </html>

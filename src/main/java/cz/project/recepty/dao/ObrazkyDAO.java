@@ -10,6 +10,10 @@ public interface ObrazkyDAO {
 	public long save(Obrazek obr);
 	//z�skej objekt na z�klad� id
 	public Obrazek getPicture(long id);
+        //ziskej obrazek podle id receptu
+        public Obrazek getPictureByReceptId(long id);
 	//z�skej v�echny recepty
 	public List<Obrazek> getPictures();
+        //odstrani obrazek podle id
+        public void remove(long id);
 }

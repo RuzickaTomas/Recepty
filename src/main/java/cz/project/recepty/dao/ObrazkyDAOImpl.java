@@ -32,8 +32,8 @@ public class ObrazkyDAOImpl implements ObrazkyDAO {
      */
     @Override
     public long save(Obrazek obr) {
-        final String insertSql = "insert into picture (id, path, recept_id) values (? ,?, ?)";
-        final String updateSql = "update picture set id = ?, path = ?, recept_id = ?";
+        final String insertSql = "insert into picture (id, path, src, recept_id) values (?, ? ,?, ?)";
+        final String updateSql = "update picture set id = ?, path = ?, src = ?, recept_id = ?";
         long result = 0L;
         PreparedStatement statement = null;
         try ( Connection connect = dataSource.getConnection()) {
@@ -42,12 +42,14 @@ public class ObrazkyDAOImpl implements ObrazkyDAO {
                 statement = connect.prepareStatement(updateSql);
                 statement.setLong(1, obr.getId());
                 statement.setString(2, obr.getPath());
-                statement.setLong(3, obr.getRecept_id());
+                statement.setString(3, obr.getSrc());
+                statement.setLong(4, obr.getRecept_id());
             } else {
                 statement = connect.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS);
                 statement.setObject(1, obr.getId());
                 statement.setString(2, obr.getPath());
-                statement.setLong(3, obr.getRecept_id());
+                statement.setString(3, obr.getSrc());
+                statement.setLong(4, obr.getRecept_id());
             }
             statement.execute();
 
@@ -91,9 +93,11 @@ public class ObrazkyDAOImpl implements ObrazkyDAO {
                 if (result.first()) {
                     final long idKey = result.getLong("id");
                     final String path = result.getString("path");
+                    final String src = result.getString("src");
                     obr = new Obrazek();
                     obr.setId(idKey);
                     obr.setPath(path);
+                    obr.setSrc(src);
                 }
             }
             connect.endRequest();
@@ -127,9 +131,12 @@ public class ObrazkyDAOImpl implements ObrazkyDAO {
                 while (result.next()) {
                     final long idKey = result.getLong("id");
                     final String path = result.getString("path");
+                    final String src = result.getString("src");
+
                     var obr = new Obrazek();
                     obr.setId(idKey);
                     obr.setPath(path);
+                    obr.setSrc(src);
                     pictures.add(obr);
                 }
             }
@@ -144,5 +151,65 @@ public class ObrazkyDAOImpl implements ObrazkyDAO {
             }
         }
         return pictures;
+    }
+
+    @Override
+    public void remove(long id) {
+        Obrazek obr = null;
+        final String sql = "delete from picture where id = ?";
+        PreparedStatement statement = null;
+        try ( Connection connect = dataSource.getConnection()) {
+            connect.beginRequest();
+            statement = connect.prepareStatement(sql);
+            statement.setLong(1, id);
+            if (statement.execute()) {
+                ResultSet result = statement.getResultSet();
+                result.deleteRow();
+            }
+            connect.endRequest();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public Obrazek getPictureByReceptId(long id) {
+        Obrazek obr = null;
+        final String sql = "select * from picture where recept_id = ?";
+        PreparedStatement statement = null;
+        try ( Connection connect = dataSource.getConnection()) {
+            connect.beginRequest();
+            statement = connect.prepareStatement(sql);
+            statement.setLong(1, id);
+            if (statement.execute()) {
+                ResultSet result = statement.getResultSet();
+                if (result.first()) {
+                    final long idKey = result.getLong("id");
+                    final String path = result.getString("path");
+                    final String src = result.getString("src");
+
+                    obr = new Obrazek();
+                    obr.setId(idKey);
+                    obr.setPath(path);
+                    obr.setSrc(src);
+                }
+            }
+            connect.endRequest();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return obr;
     }
 }

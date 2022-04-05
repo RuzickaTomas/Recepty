@@ -16,13 +16,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.LinkOption;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
@@ -93,18 +86,20 @@ public class ReceptyService implements Serializable {
             try {
                 for (Part f : getAllParts(pictures)) {
                     final String fileName = f.getSubmittedFileName();
+                    //cesta pro ulozeni obrazku
+                    final String savePath = System.getProperty("user.home") + File.separator + "pictures";
+                    final String filePath =  savePath + File.separator + fileName;
                     var picture = new Obrazek();
                     picture.setId(null);
-                    picture.setPath("http://localhost:8080/Recepty/pictures/" + fileName);
                     picture.setRecept_id(receptId);
                     InputStream input = f.getInputStream();
-                    final String savePath = System.getProperty("user.home") + File.separator + "pictures";
                     File theDir = new File(savePath);
                     if (!theDir.exists()) {
                         theDir.mkdirs();
-                    }
-                    String toFile =  savePath + File.separator + fileName;
-                    FileOutputStream fos = new FileOutputStream(new File(toFile));
+                    }             
+                    picture.setPath(filePath);    
+                    picture.setSrc("http://localhost:8080/Recepty/rest/v1/obrazky/" + receptId);
+                    FileOutputStream fos = new FileOutputStream(new File(filePath));
                     fos.write(input.readAllBytes());
                     fos.close();
                     obrazkyDao.save(picture);
@@ -115,7 +110,18 @@ public class ReceptyService implements Serializable {
         }
         recept.setFiles(null);
     }
+    
+    public String getPicture(Recept r) {
+       Obrazek obr = obrazkyDao.getPictureByReceptId(r.getId());
+       return obr == null ? "" : obr.getSrc();
+    }
 
+    public void remove(Recept recept) {
+        if (recept != null) {
+            receptyDao.remove(recept.getId());
+        }
+    }
+    
     public static Collection<Part> getAllParts(Part part) throws ServletException, IOException {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         return request.getParts().stream().filter(p -> part.getName().equals(p.getName())).collect(Collectors.toList());

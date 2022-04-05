@@ -19,7 +19,7 @@ public class RestApplication extends Application {
     private Set<Class<?>> empty = new HashSet<>();
 
     public RestApplication() {
-        empty.add(ReceptyResource.class);
+        empty.add(ObrazkyResource.class);
     }
 
     public Set<Class<?>> getClasses() {

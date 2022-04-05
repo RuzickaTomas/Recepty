@@ -12,4 +12,6 @@ public interface ReceptyDAO {
 	public Recept getRecept(long id);
 	//z�skej v�echny recepty
 	public List<Recept> getRecepts();
+        //odstrani recept podle id
+        public void remove(long id);
 }

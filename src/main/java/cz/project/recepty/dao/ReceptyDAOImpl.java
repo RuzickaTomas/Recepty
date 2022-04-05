@@ -9,7 +9,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import cz.project.recepty.beans.Recept;
 import cz.project.recepty.ds.Connector;
 
@@ -21,9 +20,9 @@ public class ReceptyDAOImpl implements ReceptyDAO {
 
     private final MysqlDataSource dataSource = Connector.getInstance().getDataSource();
 
-    
     public ReceptyDAOImpl() {
     }
+
     /**
      * Uloží předaný objekt recept a v závislosti na hodnotě id vytvoří nový
      * záznam, nebo změní stávající
@@ -142,4 +141,30 @@ public class ReceptyDAOImpl implements ReceptyDAO {
         }
         return recepts;
     }
+
+    @Override
+    public void remove(long id) {
+        Recept obr = null;
+        final String sql = "delete from recept where id = ?";
+        PreparedStatement statement = null;
+        try ( Connection connect = dataSource.getConnection()) {
+            connect.beginRequest();
+            statement = connect.prepareStatement(sql);
+            statement.setLong(1, id);
+            if (statement.execute()) {
+                ResultSet result = statement.getResultSet();
+                result.deleteRow();
+            }
+            connect.endRequest();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 }

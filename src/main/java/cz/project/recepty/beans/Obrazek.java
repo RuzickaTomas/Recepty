@@ -15,6 +15,7 @@ public class Obrazek implements Serializable {
     
     private Long id;
     private String path;
+    private String src;
     private long recept_id;
 
     public Long getId() {
@@ -23,6 +24,14 @@ public class Obrazek implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getSrc() {
+        return src;
+    }
+
+    public void setSrc(String src) {
+        this.src = src;
     }
 
     public String getPath() {
