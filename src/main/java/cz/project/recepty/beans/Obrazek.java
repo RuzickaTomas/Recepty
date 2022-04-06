@@ -9,7 +9,6 @@ import java.util.Objects;
 
 /**
  *
- * @author tomas
  */
 public class Obrazek implements Serializable {
     

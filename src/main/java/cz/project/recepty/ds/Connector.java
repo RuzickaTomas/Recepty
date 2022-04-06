@@ -8,11 +8,11 @@ import com.mysql.cj.jdbc.MysqlDataSource;
 
 /**
  *
- * @author tomas
+ * Jedinacek ktery spravuje parametry spojeni do databaze
  */
 public final class Connector {
     
-    
+    //Objekt ktery zajisti spojeni s databazi - v nasem pripade MySql
     private final MysqlDataSource dataSource;
     
     private static Connector  INSTANCE;

@@ -10,9 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Resource;
-import javax.sql.DataSource;
-
 import java.sql.Statement;
 
 /**
@@ -21,13 +18,14 @@ import java.sql.Statement;
  */
 public class ObrazkyDAOImpl implements ObrazkyDAO {
 
+    //vytvorime objekt pomoci ktereho se budeme pripojovat do databaze
     private final MysqlDataSource dataSource = Connector.getInstance().getDataSource();
 
     /**
      * Uloží předaný objekt recept a v závislosti na hodnotě id vytvoří nový
      * záznam, nebo změní stávající
      *
-     * @param recept
+     * @param obr - Objekt obrazku ktery ulozime
      * @return boolean podle toho jestli se uložení povedlo či nikoliv
      */
     @Override
@@ -36,34 +34,43 @@ public class ObrazkyDAOImpl implements ObrazkyDAO {
         final String updateSql = "update picture set id = ?, path = ?, src = ?, recept_id = ?";
         long result = 0L;
         PreparedStatement statement = null;
+        //vytvorime spojeni s databazi
         try ( Connection connect = dataSource.getConnection()) {
+            //rekneme driveru, ze ma ocekavt zahajeni dotazu
             connect.beginRequest();
             if (obr.getId() != null) {
+                //vytvorime prepared statement, zajistime aby bylz prirazeny spravne hodnoty
                 statement = connect.prepareStatement(updateSql);
+                //prirazeni hodnot v zleva do prava
                 statement.setLong(1, obr.getId());
                 statement.setString(2, obr.getPath());
                 statement.setString(3, obr.getSrc());
                 statement.setLong(4, obr.getRecept_id());
             } else {
+                //Statement.RETURN_GENERATED_KEYS - chceme aby nam result set vratil vygenerovane id
                 statement = connect.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS);
                 statement.setObject(1, obr.getId());
                 statement.setString(2, obr.getPath());
                 statement.setString(3, obr.getSrc());
                 statement.setLong(4, obr.getRecept_id());
             }
+            //provedeme dotaz
             statement.execute();
-
+            //projdeme resultSet pro vygenerovane klice    
             try ( ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                //pokud obsahuje id
                 if (generatedKeys.next()) {
+                    //dostaneme id
                     result = generatedKeys.getLong(1);
                 } else {
                     throw new SQLException("Saving picture failed, no ID obtained.");
                 }
-            }
-
+            }    
+        //pokud nastala necekana chyba ve spojeni chytime vyjimku
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
+            //nakonec uzavirame statement
             try {
                 statement.close();
             } catch (SQLException ex) {
@@ -76,8 +83,8 @@ public class ObrazkyDAOImpl implements ObrazkyDAO {
     /**
      * Vrátí záznam podle id
      *
-     * @param id
-     * @return Recept
+     * @param id - index zaznamu
+     * @return Obrazek - 
      */
     @Override
     public Obrazek getPicture(long id) {
@@ -153,6 +160,10 @@ public class ObrazkyDAOImpl implements ObrazkyDAO {
         return pictures;
     }
 
+    /**
+     * Odstranime obrazek podle id 
+     * @param id - index zaznamu
+     */
     @Override
     public void remove(long id) {
         Obrazek obr = null;
@@ -177,7 +188,11 @@ public class ObrazkyDAOImpl implements ObrazkyDAO {
             }
         }
     }
-
+    /**
+     * Odstarani obrazek podle id
+     * @param id
+     * @return Obrazek nebo null
+     */
     @Override
     public Obrazek getPictureByReceptId(long id) {
         Obrazek obr = null;
