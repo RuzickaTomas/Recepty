@@ -8,19 +8,20 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <h:head>
-        <title>JSF 2.0 Hello World</title>
+        <title>Recepty</title>
     </h:head>
     <h:body>
-        <h2>JSF 2.0 Hello World Example - welcome.xhtml</h2>
+        <h2>Výpis všech receptů</h2>
 
-<h:form>
-<h:commandLink action="createRecept">Novy recept</h:commandLink>
-</h:form>
+        <h:form>
+            <h:commandLink action="createRecept">Novy recept</h:commandLink>
+            <h:commandButton action="#{recepty.smaz()}" value="#{!recepty.smazat ? 'Smazat' : 'Zavrit'}" ></h:commandButton>
+        </h:form>
         <style>
             #recepts {
                 width: 100%;
                 display: flex;
-                justify-content: center;       
+                justify-content: center;
             }
 
             #cards {
@@ -36,8 +37,7 @@
                 flex-direction: column;
                 width: 490px;
                 height:400px;
-                border: 1px solid gray;
-
+                box-shadow:  0 4px 4px 0 lightgray;
             }
 
             #picture {
@@ -46,15 +46,16 @@
             }
             
             #ledge {
+                padding-left: 8px;
+                width: 490px;
+            }
+
+            #grid {
                 display: grid;
-                grid-template-columns: 410px 80px;
+                grid-template-columns: 402px 80px;
                 height: 90px;
             }
-            
-            #name {
-               padding-left: 8px;
-            }
-            
+
             #remove {
                 width: 75px;
                 height: 79px;
@@ -74,16 +75,22 @@
         </style>
         <div id="recepts">
             <h:form id="cards">
+                <!-- vypiseme cyklicky vsechny recepty  -->
                 <ui:repeat value="#{recepty.getRecepty()}" var="r">
                     <div class="card">
+                        <!-- pro kazdy recept ziskame obrazek  -->
                         <img id="picture" src="#{recepty.getPicture(r)}" alt="#{r.id}" width="480" height="320"/>
                         <div id="ledge">
-                            <h:commandLink id="name" action="recept" actionListener="#{recepty.openDetail()}" value="#{r.name}" >
-                                <f:param name="receptId" value="#{r.id}"/>
-                            </h:commandLink>  
-                            <h:commandLink  actionListener="#{recepty.remove(r)}">
-                                <div id="remove"></div>
-                            </h:commandLink> 
+                            <div id="grid">
+                                <!-- nazev receptu s odkazem na detail  -->
+                                <h:commandLink id="name" action="recept" actionListener="#{recepty.openDetail()}" value="#{r.name}" >
+                                    <f:param name="receptId" value="#{r.id}"/>
+                                </h:commandLink>  
+                                <!-- tlacitko pro smazani receptu  -->
+                                <h:commandLink rendered="#{recepty.smazat}" actionListener="#{recepty.remove(r)}">
+                                    <div id="remove"></div>
+                                </h:commandLink> 
+                            </div>
                         </div>
                     </div>
                 </ui:repeat>

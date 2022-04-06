@@ -1,14 +1,17 @@
 package cz.project.recepty.beans;
 
 import java.io.Serializable;
-import java.net.URL;
-import java.util.List;
 import java.util.Objects;
 
+/*
+* Třída reprezentující tabulku recept
+*/
 public class Recept implements Serializable{
 	
 	private Long id;
+        //jméno/název receptu
 	private String name;
+        //popis postupu
 	private String description;
 
 	public Recept(Long id, String name, String description) {

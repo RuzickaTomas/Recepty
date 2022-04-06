@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
+ * Jednoduchá rest služba pro získávání obrázků
  */
 public class ObrazkyServlet extends HttpServlet {
 
@@ -26,20 +26,28 @@ public class ObrazkyServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //získáme informace o path
         String path = req.getPathInfo();
         String[] pathSplit = path.split("/");
+        //dostaneme číselnou hodnotu a vytvoříme long
         Long id = Long.parseLong(pathSplit[1]);
+        //získáme obrázek z databáze
         Obrazek obr = obrazkyDao.getPictureByReceptId(id);
         byte[] imageData = null;
         try {
+            //načteme soubor obrázku z konkrétní adresy kde je uložen
             BufferedImage image = ImageIO.read(new File(obr.getPath()));
+            //vytvoříme stream, tak abychom mohli zapsat změny
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            //zapíšeme obrázek image do streamu baos
             ImageIO.write(image, "png", baos);
+            //vrátíme obrázek jako pole bytů
             imageData = baos.toByteArray();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+        //výsledek zapíšeme do odpovědi
         resp.getOutputStream().write(imageData);
     }
 

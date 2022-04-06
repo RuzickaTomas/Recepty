@@ -9,12 +9,16 @@ import java.util.Objects;
 
 /**
  *
+ * Třída reprezentující tabulku picture
  */
 public class Obrazek implements Serializable {
     
     private Long id;
+    //fyzická cesta k souboru na počítači
     private String path;
+    //url adresa obrázku
     private String src;
+    //id receptu ke kterému obrázek patří
     private long recept_id;
 
     public Long getId() {

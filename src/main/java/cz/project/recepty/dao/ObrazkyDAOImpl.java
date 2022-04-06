@@ -84,7 +84,7 @@ public class ObrazkyDAOImpl implements ObrazkyDAO {
      * Vrátí záznam podle id
      *
      * @param id - index zaznamu
-     * @return Obrazek - 
+     * @return Obrazek 
      */
     @Override
     public Obrazek getPicture(long id) {
@@ -123,7 +123,7 @@ public class ObrazkyDAOImpl implements ObrazkyDAO {
     /**
      * Vrátí všechny existující záznamy z tabulky picture
      *
-     * @return List<Obrazek>
+     * @return List nebo prázdný List
      */
     @Override
     public List<Obrazek> getPictures() {

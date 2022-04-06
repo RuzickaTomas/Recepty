@@ -49,6 +49,8 @@ public class ReceptyService implements Serializable {
 
     private ReceptDTO receptDetail;   
     
+    private boolean smazat =false; 
+    
     private transient final Logger logger = Logger.getLogger(ReceptyService.class.getName());
 
     public ReceptyService() {
@@ -142,6 +144,18 @@ public class ReceptyService implements Serializable {
 
     public void setReceptDetail(ReceptDTO receptDetail) {
         this.receptDetail = receptDetail;
+    }
+
+    public boolean isSmazat() {
+        return smazat;
+    }
+
+    public void setSmazat(boolean smazat) {
+        this.smazat = smazat;
+    }
+    
+    public void smaz() {
+        this.smazat = !this.smazat;
     }
    
     public void openDetail() {

@@ -110,7 +110,7 @@ public class ReceptyDAOImpl implements ReceptyDAO {
     /**
      * Vrátí všechny existující záznamy z tabulky recept
      *
-     * @return List<Recept>
+     * @return List nebo prázdný List
      */
     @Override
     public List<Recept> getRecepts() {
@@ -142,6 +142,11 @@ public class ReceptyDAOImpl implements ReceptyDAO {
         return recepts;
     }
 
+    
+    /**
+     * Odstraní recept podle id
+     * @param id 
+     */
     @Override
     public void remove(long id) {
         Recept obr = null;
