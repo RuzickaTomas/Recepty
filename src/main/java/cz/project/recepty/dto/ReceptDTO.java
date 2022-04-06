@@ -18,7 +18,6 @@ public class ReceptDTO {
     private String name;
     private String description;
     private Part files;
-    private final List<String> pictures = new ArrayList<>();
     
     public ReceptDTO() {}
 
@@ -45,10 +44,7 @@ public class ReceptDTO {
     public void setDescription(String description) {
         this.description = description;
     }
-    
-    public List<String> getPictures() {
-        return pictures;
-    }
+   
 
     public Part getFiles() {
         return this.files;
@@ -60,42 +56,26 @@ public class ReceptDTO {
    
     
     @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 73 * hash + Objects.hashCode(this.id);
-        hash = 73 * hash + Objects.hashCode(this.name);
-        hash = 73 * hash + Objects.hashCode(this.description);
-        hash = 73 * hash + Objects.hashCode(this.pictures);
-        return hash;
-    }
+	public int hashCode() {
+		return Objects.hash(description, files, id, name);
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final ReceptDTO other = (ReceptDTO) obj;
-        if (!Objects.equals(this.name, other.name)) {
-            return false;
-        }
-        if (!Objects.equals(this.description, other.description)) {
-            return false;
-        }
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return Objects.equals(this.pictures, other.pictures);
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ReceptDTO other = (ReceptDTO) obj;
+		return Objects.equals(description, other.description) && Objects.equals(files, other.files)
+				&& Objects.equals(id, other.id) && Objects.equals(name, other.name);
+	}
 
-    @Override
+	@Override
     public String toString() {
-        return "ReceptDTO{" + "id=" + id + ", name=" + name + ", description=" + description + ", pictures=" + pictures + '}';
+        return "ReceptDTO{" + "id=" + id + ", name=" + name + ", description=" + description + '}';
     }
    
     

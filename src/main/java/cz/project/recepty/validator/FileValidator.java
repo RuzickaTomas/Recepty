@@ -5,6 +5,7 @@
 package cz.project.recepty.validator;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.FacesValidator;
@@ -30,14 +31,11 @@ public class FileValidator implements Validator {
         try {
             if (file == null || file.getSize() <= 0 || file.getContentType().isEmpty()) {
                 message = new FacesMessage("Select a valid file");
-            } else if (!file.getContentType().endsWith("jpg")) {
-                message = defaultMsg;
-            } else if (!file.getContentType().endsWith("jpeg")) {
-                message = defaultMsg;
-            } else if (!file.getContentType().endsWith("png")) {
-                message = defaultMsg;
-            } else if (!file.getContentType().endsWith("gif")) {
-                message = defaultMsg;
+            } else if (!file.getContentType().endsWith("jpg")
+            		&& !file.getContentType().endsWith("jpeg")
+            		&& !file.getContentType().endsWith("png")
+            		&& !file.getContentType().endsWith("gif")) {
+            	message = defaultMsg;
             } else if (file.getSize() > maxSize) {
                 message = new FacesMessage("File size too big. File size allowed  is less than or equal to 2 MB.");
             }
