@@ -1,5 +1,6 @@
 cz/project/recepty/beans/Recept.class
 cz/project/recepty/dto/ReceptDTO.class
+cz/project/recepty/validator/FileValidator.class
 cz/project/recepty/service/ReceptyService.class
 cz/project/recepty/rest/ObrazkyServlet.class
 cz/project/recepty/dao/ReceptyDAOImpl.class

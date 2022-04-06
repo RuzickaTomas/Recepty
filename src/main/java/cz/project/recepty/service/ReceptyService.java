@@ -23,7 +23,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -47,17 +46,13 @@ public class ReceptyService implements Serializable {
 
     private ReceptDTO recept;
 
-    private ReceptDTO receptDetail;   
-    
-    private boolean smazat =false; 
-    
-    private transient final Logger logger = Logger.getLogger(ReceptyService.class.getName());
+    private ReceptDTO receptDetail;
+
+    private boolean smazat = false;
+
+    private static final Logger logger = Logger.getLogger(ReceptyService.class.getName());
 
     public ReceptyService() {
-    }
-
-    @PostConstruct
-    public void init() {
         this.recept = new ReceptDTO();
         this.receptyDao = new ReceptyDAOImpl();
         this.obrazkyDao = new ObrazkyDAOImpl();
@@ -122,11 +117,11 @@ public class ReceptyService implements Serializable {
         recept.setFiles(null);
     }
 
-    public String getPicture(ReceptDTO r){
-       Recept transformed = TransformRecept.transform(r);
-       return getPicture(transformed);
+    public String getPicture(ReceptDTO r) {
+        Recept transformed = TransformRecept.transform(r);
+        return getPicture(transformed);
     }
-    
+
     public String getPicture(Recept r) {
         Obrazek obr = obrazkyDao.getPictureByReceptId(r.getId());
         return obr == null ? "" : obr.getSrc();
@@ -153,15 +148,16 @@ public class ReceptyService implements Serializable {
     public void setSmazat(boolean smazat) {
         this.smazat = smazat;
     }
-    
+
     public void smaz() {
         this.smazat = !this.smazat;
     }
-   
+
     public void openDetail() {
         FacesContext ctx = FacesContext.getCurrentInstance();
         Map<String, String> params = ctx.getExternalContext().getRequestParameterMap();
         Long receptId = Long.parseLong(params.get("receptId"));
+        logger.info("redirect to recept id " + receptId + " detail");
         receptDetail = TransformRecept.transform(receptyDao.getRecept(receptId));
     }
 

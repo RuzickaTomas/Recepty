@@ -9,3 +9,4 @@
 /home/tomas/Dokumenty/Recepty/src/main/java/cz/project/recepty/rest/ObrazkyServlet.java
 /home/tomas/Dokumenty/Recepty/src/main/java/cz/project/recepty/beans/Recept.java
 /home/tomas/Dokumenty/Recepty/src/main/java/cz/project/recepty/dto/ReceptDTO.java
+/home/tomas/Dokumenty/Recepty/src/main/java/cz/project/recepty/validator/FileValidator.java

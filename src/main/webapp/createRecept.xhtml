@@ -30,11 +30,13 @@
 	<div id="container">
 		<h:form id="createReceptForm" enctype="multipart/form-data">
 			<h:outputLabel>Název</h:outputLabel>
-			<h:inputText value="#{recepty.recept.name}" />
+                        <h:inputText value="#{recepty.recept.name}" required="true" requiredMessage="Název musí být vyplněn" />
 			<h:outputLabel>Popis</h:outputLabel>
-			<h:inputTextarea value="#{recepty.recept.description}" />
+			<h:inputTextarea value="#{recepty.recept.description}" required="true" requiredMessage="Popis musí být vyplněn" />
 			<h:outputLabel>Obrázky</h:outputLabel>
-			<h:inputFile value="#{recepty.pictures}" a:multiple="true" />
+                        <h:inputFile value="#{recepty.pictures}" a:multiple="true" >
+                            <f:validator validatorId="fileValidator"/>
+                        </h:inputFile>
 			<h:commandButton actionListener="#{recepty.save()}" value="Uložit"></h:commandButton>
 		</h:form>
 	</div>
