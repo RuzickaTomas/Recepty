@@ -11,13 +11,36 @@
         <title>Recepty</title>
     </h:head>
     <h:body>
-        <h2>Výpis všech receptů</h2>
 
-        <h:form>
-            <h:commandLink action="createRecept">Novy recept</h:commandLink>
-            <h:commandButton action="#{recepty.smaz()}" value="#{!recepty.smazat ? 'Smazat' : 'Zavrit'}" ></h:commandButton>
-        </h:form>
+
+
         <style>
+            #actionMenu{
+                display: flex;
+            }
+
+            #actions {
+                height: 60px;
+                display: flex;
+            }
+
+            .actionLink {
+                display: flex;
+                width: 200px;
+                height: 60px;
+                margin-left: 5px;          
+                align-items:center;
+                justify-content:center;
+            }
+            .actionLink:link {
+                text-decoration: none;
+                color: black;
+            }
+            
+            .actionLink:hover {
+                border-bottom: 5px solid #d50505;
+            }
+
             #recepts {
                 width: 100%;
                 display: flex;
@@ -49,7 +72,7 @@
                 padding-left: 8px;
                 width: 490px;
             }
-            
+
             .name {
                 margin-left: 8px;
                 width: 480px;
@@ -82,8 +105,16 @@
             }
 
         </style>
+        <div id="actionMenu">
+            <h2>Výpis všech receptů</h2>
+            <h:form id="actions">
+                <h:commandLink styleClass="actionLink" action="createRecept" value="Novy recept"></h:commandLink>
+                <h:commandLink styleClass="actionLink" action="#{recepty.smaz()}" value="#{!recepty.smazat ? 'Smazat' : 'Zavrit'}" ></h:commandLink>
+            </h:form>
+        </div>
         <div id="recepts">
             <h:form id="cards">
+
                 <!-- vypiseme cyklicky vsechny recepty  -->
                 <ui:repeat value="#{recepty.getRecepty()}" var="r">
                     <div class="card">
