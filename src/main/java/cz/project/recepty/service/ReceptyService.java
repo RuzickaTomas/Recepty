@@ -38,9 +38,9 @@ import javax.servlet.http.Part;
 @ManagedBean(name = "recepty")
 public class ReceptyService implements Serializable {
 
-    private ReceptyDAO receptyDao;
+    private final ReceptyDAO receptyDao;
 
-    private ObrazkyDAO obrazkyDao;
+    private final ObrazkyDAO obrazkyDao;
 
     private Part pictures;
 
@@ -152,12 +152,17 @@ public class ReceptyService implements Serializable {
     public void smaz() {
         this.smazat = !this.smazat;
     }
+    
+    public void storno() {
+        pictures = null;
+        this.recept = new ReceptDTO();
+    }
 
     public void openDetail() {
         FacesContext ctx = FacesContext.getCurrentInstance();
         Map<String, String> params = ctx.getExternalContext().getRequestParameterMap();
         Long receptId = Long.parseLong(params.get("receptId"));
-        logger.info("redirect to recept id " + receptId + " detail");
+        logger.log(Level.INFO, "redirect to recept id {0} detail", receptId);
         receptDetail = TransformRecept.transform(receptyDao.getRecept(receptId));
     }
 
