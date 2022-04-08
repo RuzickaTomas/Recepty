@@ -34,7 +34,7 @@
             }
         </style>
         <h:form>
-            <h:commandLink action="index">Zpet</h:commandLink>
+            <h:commandLink action="index?faces-redirect=true">Zpet</h:commandLink>
         </h:form>
         <div id="container">
             <h:form id="createReceptForm" enctype="multipart/form-data">
@@ -50,7 +50,7 @@
                 </h:inputFile>
                 <h:message for="files" styleClass="errorMsg"/>
                 <h:commandButton actionListener="#{recepty.storno()}" value="Storno"></h:commandButton>
-                <h:commandButton actionListener="#{recepty.save()}" value="Uložit"></h:commandButton>
+                <h:commandButton action="#{recepty.save()}" value="Uložit"></h:commandButton>
             </h:form>
         </div>
     </h:body>

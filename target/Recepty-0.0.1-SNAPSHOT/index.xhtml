@@ -44,25 +44,34 @@
                 background-color: black;
                 margin: 0 auto;
             }
-            
+
             #ledge {
                 padding-left: 8px;
                 width: 490px;
             }
+            
+            .name {
+                margin-left: 8px;
+                width: 480px;
+                height: 60px;
+            }
 
-            #grid {
-                display: grid;
-                grid-template-columns: 402px 80px;
-                height: 90px;
+            .name:link {
+                text-decoration: none;
+                font-weight: 300;
+                color: black;
             }
 
             #remove {
-                width: 75px;
-                height: 79px;
+                width: 60px;
+                height: 64px;
                 text-align: center;
                 background-color: red;
-                font-size: 60px;
+                font-size: 50px;
                 color: white;
+                margin-left: 425px;
+                z-index: 100;
+                position: absolute;
             }
 
             #remove:after {
@@ -78,20 +87,18 @@
                 <!-- vypiseme cyklicky vsechny recepty  -->
                 <ui:repeat value="#{recepty.getRecepty()}" var="r">
                     <div class="card">
+                        <h:commandLink rendered="#{recepty.smazat}" actionListener="#{recepty.remove(r)}" title="Smazat #{r.name}">
+                            <div id="remove"></div>
+                        </h:commandLink> 
                         <!-- pro kazdy recept ziskame obrazek  -->
                         <img id="picture" src="#{recepty.getPicture(r)}" alt="#{r.id}" width="480" height="320"/>
-                        <div id="ledge">
-                            <div id="grid">
-                                <!-- nazev receptu s odkazem na detail  -->
-                                <h:commandLink id="name" action="recept" actionListener="#{recepty.openDetail()}" value="#{r.name}" >
-                                    <f:param name="receptId" value="#{r.id}"/>
-                                </h:commandLink>  
-                                <!-- tlacitko pro smazani receptu  -->
-                                <h:commandLink rendered="#{recepty.smazat}" actionListener="#{recepty.remove(r)}">
-                                    <div id="remove"></div>
-                                </h:commandLink> 
-                            </div>
-                        </div>
+                        <!-- tlacitko pro smazani receptu  -->
+                        <div style="margin-top:10px; height: 5px; width: 490px;"></div>
+                        <!-- nazev receptu s odkazem na detail  -->
+                        <h:commandLink styleClass="name" action="recept?faces-redirect=true" actionListener="#{recepty.openDetail()}" value="#{r.name}" >
+                            <f:param name="receptId" value="#{r.id}"/>
+                        </h:commandLink>  
+
                     </div>
                 </ui:repeat>
             </h:form>

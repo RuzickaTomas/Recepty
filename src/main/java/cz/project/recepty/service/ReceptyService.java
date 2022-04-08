@@ -34,13 +34,14 @@ import javax.servlet.http.Part;
  *
  *
  */
+
+@ManagedBean(name ="recepty")
 @SessionScoped
-@ManagedBean(name = "recepty")
 public class ReceptyService implements Serializable {
 
-    private final ReceptyDAO receptyDao;
+    private final transient ReceptyDAO receptyDao;
 
-    private final ObrazkyDAO obrazkyDao;
+    private final transient ObrazkyDAO obrazkyDao;
 
     private Part pictures;
 
@@ -74,13 +75,14 @@ public class ReceptyService implements Serializable {
         this.pictures = pictures;
     }
 
-    public void save() {
+    public String save() {
         long result = receptyDao.save(TransformRecept.transform(recept));
         if (result > 0) {
             uploadFiles(result);
             logger.log(Level.INFO, ">>OK<<");
         }
         recept = new ReceptDTO();
+        return "index?faces-redirect=true";
     }
 
     public List<Recept> getRecepty() {
@@ -95,7 +97,7 @@ public class ReceptyService implements Serializable {
                     //cesta pro ulozeni obrazku
                     final String savePath = System.getProperty("user.home") + File.separator + "pictures";
                     final String filePath = savePath + File.separator + fileName;
-                    var picture = new Obrazek();
+                    Obrazek picture = new Obrazek();
                     picture.setId(null);
                     picture.setRecept_id(receptId);
                     InputStream input = f.getInputStream();
@@ -162,7 +164,7 @@ public class ReceptyService implements Serializable {
         FacesContext ctx = FacesContext.getCurrentInstance();
         Map<String, String> params = ctx.getExternalContext().getRequestParameterMap();
         Long receptId = Long.parseLong(params.get("receptId"));
-        logger.log(Level.INFO, "redirect to recept id {0} detail", receptId);
+        logger.log(Level.INFO, "redirect to recept id "+receptId+ " detail" );
         receptDetail = TransformRecept.transform(receptyDao.getRecept(receptId));
     }
 
