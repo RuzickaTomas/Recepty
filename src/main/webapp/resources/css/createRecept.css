@@ -1,0 +1,21 @@
+@charset "UTF-8";¨
+.errorMsg {
+	color: #d50505;
+	font-weight: bolder;
+}
+
+#container {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+#createReceptForm {
+	display: flex;
+	flex-direction: column;
+	border: 1p solid gray;
+}
+
+input[type="submit"] {
+	margin-top: 5px;
+}

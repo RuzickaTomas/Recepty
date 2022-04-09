@@ -1,0 +1,30 @@
+@charset "UTF-8";
+
+#container {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+#recept {
+	display: flex;
+	flex-direction: column;
+	border: 1p solid gray;
+}
+
+img {
+	background-color: black;
+}
+
+#name {
+	width: 800px;
+	padding-top: 5px;
+	margin-top: 10px;
+	font-weight: bolder;
+}
+
+#description {
+	width: 800px;
+	padding-top: 5px;
+	margin-top: 10px;
+}

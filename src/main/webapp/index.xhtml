@@ -9,107 +9,15 @@
 
     <h:head>
         <title>Recepty</title>
-    </h:head>
+    	<h:outputStylesheet library="css" name="recepty.css"  />
+    </h:head> 
     <h:body>
 
-
-
-        <style>
-            #actionMenu{
-                display: flex;
-            }
-
-            #actions {
-                height: 60px;
-                display: flex;
-            }
-
-            .actionLink {
-                display: flex;
-                width: 200px;
-                height: 60px;
-                margin-left: 5px;          
-                align-items:center;
-                justify-content:center;
-            }
-            .actionLink:link {
-                text-decoration: none;
-                color: black;
-            }
-            
-            .actionLink:hover {
-                border-bottom: 5px solid #d50505;
-            }
-
-            #recepts {
-                width: 100%;
-                display: flex;
-                justify-content: center;
-            }
-
-            #cards {
-                display: grid;
-                column-gap: 15px;
-                grid-template-columns: 490px 490px 490px 490px;
-            }
-
-            .card {
-                margin:5px;
-                padding:3px;
-                display: flex;
-                flex-direction: column;
-                width: 490px;
-                height:400px;
-                box-shadow:  0 4px 4px 0 lightgray;
-            }
-
-            #picture {
-                background-color: black;
-                margin: 0 auto;
-            }
-
-            #ledge {
-                padding-left: 8px;
-                width: 490px;
-            }
-
-            .name {
-                margin-left: 8px;
-                width: 480px;
-                height: 60px;
-            }
-
-            .name:link {
-                text-decoration: none;
-                font-weight: 300;
-                color: black;
-            }
-
-            #remove {
-                width: 60px;
-                height: 64px;
-                text-align: center;
-                background-color: red;
-                font-size: 50px;
-                color: white;
-                margin-left: 425px;
-                z-index: 100;
-                position: absolute;
-            }
-
-            #remove:after {
-                display: flex;
-                justify-content: center;
-                display: inline-block;
-                content: "\00d7";
-            }
-
-        </style>
         <div id="actionMenu">
             <h2>Výpis všech receptů</h2>
             <h:form id="actions">
-                <h:commandLink styleClass="actionLink" action="createRecept" value="Novy recept"></h:commandLink>
-                <h:commandLink styleClass="actionLink" action="#{recepty.smaz()}" value="#{!recepty.smazat ? 'Smazat' : 'Zavrit'}" ></h:commandLink>
+                <h:commandLink styleClass="actionLink" action="createRecept" value="Nový recept"></h:commandLink>
+                <h:commandLink styleClass="actionLink" action="#{recepty.smaz()}" value="#{!recepty.smazat ? 'Smazat' : 'Zavřít'}" ></h:commandLink>
             </h:form>
         </div>
         <div id="recepts">
