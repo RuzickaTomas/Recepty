@@ -34,9 +34,10 @@
 }
 
 #cards {
-	display: grid;
+	display: flex;
+	justify-content: center;
+	flex-flow: row wrap;
 	column-gap: 15px;
-	grid-template-columns: 490px 490px 490px 490px;
 }
 
 .card {
