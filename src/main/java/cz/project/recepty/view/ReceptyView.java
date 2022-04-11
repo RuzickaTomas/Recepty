@@ -41,7 +41,7 @@ public class ReceptyView implements Serializable {
 
     private static final Logger logger = Logger.getLogger(ReceptService.class.getName());
 
-    private final ReceptService service;
+    private ReceptService service;
 
     public ReceptyView() {
         this.recept = new ReceptDTO();

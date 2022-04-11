@@ -4,6 +4,7 @@
  */
 package cz.project.recepty.dto;
 
+import java.io.Serializable;
 import java.util.Objects;
 import javax.servlet.http.Part;
 
@@ -11,7 +12,7 @@ import javax.servlet.http.Part;
  * Jednoduchá přepravka, pro uložení dat jmenovitě z formuláře pro vytvoření
  * receptu
  */
-public class ReceptDTO {
+public class ReceptDTO implements Serializable {
 
     private Long id;
     private String name; // název receptu

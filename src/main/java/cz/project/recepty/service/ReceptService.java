@@ -38,7 +38,7 @@ public class ReceptService {
         long result = receptyDao.save(TransformRecept.transform(recept));
         return result;
     }
-
+    
     public List<Recept> getRecepty() {
         return receptyDao.getRecepts();
     }
@@ -46,7 +46,7 @@ public class ReceptService {
     public ReceptDTO getRecept(long receptId) {
         return TransformRecept.transform(receptyDao.getRecept(receptId));
     }
-
+    
     public void uploadFile(Part part, long receptId) throws IOException {
                     final String fileName = part.getSubmittedFileName();
                     //cesta pro ulozeni obrazku
