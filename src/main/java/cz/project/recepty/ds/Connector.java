@@ -21,8 +21,8 @@ public final class Connector {
         this.dataSource = new MysqlDataSource();
         this.dataSource.setURL("jdbc:mysql://localhost:3306/test?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
         this.dataSource.setUser("root");
-        //this.dataSource.setPassword("asd");
-        this.dataSource.setPassword("admin123");
+        this.dataSource.setPassword("asd");
+       // this.dataSource.setPassword("admin123");
     }
 
     public MysqlDataSource getDataSource() {
