@@ -18,15 +18,22 @@
 		<h:form id="actions">
 			<h:commandLink styleClass="actionLink"
 				action="index?faces-redirect=true" value="Zpět"></h:commandLink>
+                    <h:commandLink styleClass="actionLink"
+                                   action="#{recepty.uprav()}" value="#{recepty.upravit ? 'Upravit' : 'Zavřít'}"></h:commandLink>
 		</h:form>
 	</div>
 	<div id="container">
 		<div id="recept">
 			<img src="#{recepty.getPicture(recepty.receptDetail)}" alt="recept"
 				width="800" height="600" />
-			<h:outputText id="name" value="#{recepty.receptDetail.name}" />
-			<h:outputText id="description"
+			<h:outputText rendered="#{recepty.upravit}" id="name" value="#{recepty.receptDetail.name}" />
+			<h:outputText rendered="#{recepty.upravit}" id="description"
 				value="#{recepty.receptDetail.description}" />
+                        <h:form rendered="#{!recepty.upravit}" style="display: flex; flex-direction: column;">
+                            <h:inputText  value="#{recepty.receptDetail.name}"/>
+                            <h:inputTextarea value="#{recepty.receptDetail.description}"/>
+                            <h:commandButton value="Upravit" actionListener="#{recepty.update()}" />
+                        </h:form>
 		</div>
 	</div>
 </h:body>

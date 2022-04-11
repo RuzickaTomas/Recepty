@@ -33,31 +33,36 @@ public class ReceptyDAOImpl implements ReceptyDAO {
     @Override
     public long save(Recept recept) {
         final String insertSql = "insert into recept (id, name, description) values (?, ?, ?)";
-        final String updateSql = "update recept set id = ?, name = ?, description = ?";
+        final String updateSql = "update recept set name = ?, description = ? where id = ? ";
         long result = 0L;
+        boolean update = false;
         PreparedStatement statement = null;
         try ( Connection connect = dataSource.getConnection()) {
             connect.beginRequest();
             if (recept.getId() != null) {
-                statement = connect.prepareStatement(updateSql);
-                statement.setInt(1, recept.getId().intValue());
-                statement.setString(2, recept.getName());
-                statement.setString(3, recept.getDescription());
+                update = true;
+                statement = connect.prepareStatement(updateSql, Statement.NO_GENERATED_KEYS);
+                statement.setInt(3, recept.getId().intValue());
+                statement.setString(1, recept.getName());
+                statement.setString(2, recept.getDescription());
+                result = recept.getId();
             } else {
+                update = false;
                 statement = connect.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS);
                 statement.setObject(1, recept.getId());
                 statement.setString(2, recept.getName());
                 statement.setString(3, recept.getDescription());
             }
-            statement.execute();
-            try ( ResultSet generatedKeys = statement.getGeneratedKeys()) {
+            statement.executeUpdate();
+            if (!update) {
+                ResultSet generatedKeys = statement.getGeneratedKeys();
                 if (generatedKeys.next()) {
                     result = generatedKeys.getLong(1);
                 } else {
                     throw new SQLException("Saving picture failed, no ID obtained.");
                 }
-            }
 
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -142,10 +147,10 @@ public class ReceptyDAOImpl implements ReceptyDAO {
         return recepts;
     }
 
-    
     /**
      * Odstraní recept podle id
-     * @param id 
+     *
+     * @param id
      */
     @Override
     public void remove(long id) {

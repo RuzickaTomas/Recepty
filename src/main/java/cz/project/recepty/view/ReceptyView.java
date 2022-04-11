@@ -27,7 +27,7 @@ import javax.servlet.http.Part;
  */
 @ManagedBean(name = "recepty")
 @SessionScoped
-public class ReceptyView implements Serializable{
+public class ReceptyView implements Serializable {
 
     private Part pictures;
 
@@ -36,6 +36,8 @@ public class ReceptyView implements Serializable{
     private ReceptDTO receptDetail;
 
     private boolean smazat = false;
+
+    private boolean upravit = false;
 
     private static final Logger logger = Logger.getLogger(ReceptService.class.getName());
 
@@ -57,7 +59,7 @@ public class ReceptyView implements Serializable{
     public void setPictures(Part pictures) {
         this.pictures = pictures;
     }
-    
+
     public Part getPictures() {
         return null;
     }
@@ -82,16 +84,34 @@ public class ReceptyView implements Serializable{
         this.smazat = !this.smazat;
     }
 
+    public void uprav() {
+        this.upravit = !this.upravit;
+    }
+
+    public boolean isUpravit() {
+        return upravit;
+    }
+
+    public void setUpravit(boolean upravit) {
+        this.upravit = upravit;
+    }
+
     public void storno() {
         pictures = null;
         this.recept = new ReceptDTO();
+    }
+
+    public void update() {
+        this.service.save(receptDetail);
+        logger.log(Level.INFO, "Recept " + this.receptDetail.getName() + " by úspěšně upraven!");
+
     }
 
     public String save() {
         long result = this.service.save(recept);
         if (result > 0) {
             uploadFiles(result);
-            logger.log(Level.INFO, "Recept " + this.recept.getName() + " by úspěšně uložen!" );
+            logger.log(Level.INFO, "Recept " + this.recept.getName() + " by úspěšně uložen!");
         }
         recept = new ReceptDTO();
         return "index?faces-redirect=true";
@@ -120,11 +140,11 @@ public class ReceptyView implements Serializable{
         }
         recept.setFiles(null);
     }
-    
+
     public String getPicture(ReceptDTO r) {
         return this.service.getPicture(r);
     }
-    
+
     public String getPicture(Recept r) {
         return this.service.getPicture(r);
     }
