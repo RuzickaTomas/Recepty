@@ -8,6 +8,7 @@ import cz.project.recepty.beans.Recept;
 import cz.project.recepty.dto.ReceptDTO;
 import cz.project.recepty.service.ReceptService;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -21,9 +22,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 
+/**
+ * Zobrazíme recepty nebo pouze jejich části.
+ */
 @ManagedBean(name = "recepty")
 @SessionScoped
-public class ReceptyView {
+public class ReceptyView implements Serializable{
 
     private Part pictures;
 
@@ -87,7 +91,7 @@ public class ReceptyView {
         long result = this.service.save(recept);
         if (result > 0) {
             uploadFiles(result);
-            logger.log(Level.INFO, ">>OK<<");
+            logger.log(Level.INFO, "Recept " + this.recept.getName() + " by úspěšně uložen!" );
         }
         recept = new ReceptDTO();
         return "index?faces-redirect=true";

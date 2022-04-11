@@ -25,17 +25,13 @@ import javax.servlet.http.Part;
  */
 public class ReceptService {
 
-    private final transient ReceptyDAO receptyDao;
+    private final ReceptyDAO receptyDao;
 
-    private final transient ObrazkyDAO obrazkyDao;
+    private final ObrazkyDAO obrazkyDao;
 
     public ReceptService() {
         this.receptyDao = new ReceptyDAOImpl();
         this.obrazkyDao = new ObrazkyDAOImpl();
-    }
-
-    public Part getPictures() {
-        return null;
     }
 
     public long save(ReceptDTO recept) {
