@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -28,6 +29,8 @@ import javax.servlet.http.Part;
 @ManagedBean(name = "recepty")
 @SessionScoped
 public class ReceptyView implements Serializable {
+    
+    private static final long serialVersionUID = 64516531564487651L;
 
     private Part pictures;
 
@@ -39,8 +42,8 @@ public class ReceptyView implements Serializable {
 
     private boolean upravit = false;
 
-    private static final Logger logger = Logger.getLogger(ReceptService.class.getName());
-
+    private static final Logger logger = Logger.getLogger(ReceptyView.class.getName());
+ 
     private ReceptService service;
 
     public ReceptyView() {

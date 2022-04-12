@@ -4,7 +4,6 @@
 /home/tomas/Dokumenty/Recepty/src/main/java/cz/project/recepty/dao/ObrazkyDAO.java
 /home/tomas/Dokumenty/Recepty/src/main/java/cz/project/recepty/view/ReceptyView.java
 /home/tomas/Dokumenty/Recepty/src/main/java/cz/project/recepty/rest/ObrazkyServlet.java
-/home/tomas/Dokumenty/Recepty/src/main/java/cz/project/recepty/service/ReceptServiceImpl.java
 /home/tomas/Dokumenty/Recepty/src/main/java/cz/project/recepty/service/ReceptService.java
 /home/tomas/Dokumenty/Recepty/src/main/java/cz/project/recepty/transform/TransformRecept.java
 /home/tomas/Dokumenty/Recepty/src/main/java/cz/project/recepty/beans/Obrazek.java
