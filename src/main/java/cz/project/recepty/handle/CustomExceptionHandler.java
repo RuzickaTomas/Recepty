@@ -4,7 +4,6 @@
  */
 package cz.project.recepty.handle;
 
-import java.util.Iterator;
 import java.util.Map;
 import javax.faces.FacesException;
 import javax.faces.application.NavigationHandler;
