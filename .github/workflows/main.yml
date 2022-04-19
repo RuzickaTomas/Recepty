@@ -4,9 +4,9 @@ name: Recepty CI
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ feature-annotatation ]
+    branches: [ master ]
   pull_request:
-    branches: [ feature-annotatation ]
+    branches: [ master ]
 
 jobs:
   sonarcloud:
