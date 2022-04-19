@@ -34,10 +34,8 @@
                         <!-- tlacitko pro smazani receptu  -->
                         <div style="margin-top:10px; height: 5px; width: 490px;"></div>
                         <!-- nazev receptu s odkazem na detail  -->
-                        <h:commandLink styleClass="name" action="recept?faces-redirect=true" actionListener="#{recepty.openDetail()}" value="#{r.name}" >
-                            <f:param name="receptId" value="#{r.id}"/>
+                        <h:commandLink styleClass="name" action="recept?faces-redirect=true" actionListener="#{recepty.openDetail(r.id)}" value="#{r.name}" >
                         </h:commandLink>  
-
                     </div>
                 </ui:repeat>
             </h:form>
