@@ -9,7 +9,7 @@ import javax.ejb.Stateless;
 
 /**
  *
- * Jedinacek ktery spravuje parametry spojeni do databaze
+ *  Spravuje parametry spojeni do databaze
  */
 @DataSourceDefinition(className = "com.mysql.cj.jdbc.Driver",
         name = "java:global/recepty/MyDS",

@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +27,7 @@ import javax.servlet.http.Part;
  * Zobrazíme recepty nebo pouze jejich části.
  */
 @ManagedBean(name = "recepty")
-@SessionScoped
+@ViewScoped
 public class ReceptyView implements Serializable {
 
     private static final long serialVersionUID = 64516531564487651L;
@@ -41,8 +41,6 @@ public class ReceptyView implements Serializable {
     private boolean smazat = false;
 
     private static final Logger logger = Logger.getLogger(ReceptyView.class.getName());
-
-    private String receptId;
     
     @EJB
     private IReceptService service;
@@ -133,19 +131,6 @@ public class ReceptyView implements Serializable {
 
     public String getPicture(Recept r) {
         return this.service.getPicture(r);
-    }
-
-    public String getReceptId() {
-        return receptId;
-    }
-
-    public void setReceptId(String receptId) {
-        this.receptId = receptId;
-    }
-
-    public void openDetail(Long id) {
-        this.receptId = id.toString();
-        logger.log(Level.INFO, "redirect to recept id " + this.receptId + " detail");
     }
 
     public static Collection<Part> getAllParts(Part part) throws ServletException, IOException {

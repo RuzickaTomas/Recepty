@@ -4,7 +4,6 @@
  */
 package cz.project.recepty.handle;
 
-import jakarta.faces.event.ExceptionQueuedEventContext;
 import java.util.Iterator;
 import java.util.Map;
 import javax.faces.FacesException;
@@ -13,6 +12,7 @@ import javax.faces.context.ExceptionHandler;
 import javax.faces.context.ExceptionHandlerWrapper;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ExceptionQueuedEvent;
+import javax.faces.event.ExceptionQueuedEventContext;
 
 /**
  *

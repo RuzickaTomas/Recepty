@@ -2,39 +2,40 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-<h:head>
-	<title>Recepty - #{detail.receptDetail.name}</title>
-	<h:outputStylesheet library="css" name="recepty.css" />
-	<h:outputStylesheet library="css" name="receptDetail.css" />
-</h:head>
-<h:body>
-	<div id="actionMenu">
-		<h2>#{detail.receptDetail.name}</h2>
-		<h:form id="actions">
-			<h:commandLink styleClass="actionLink"
-				action="index?faces-redirect=true" value="Zpět"></h:commandLink>
-                    <h:commandLink styleClass="actionLink"
-                                   action="#{detail.uprav()}" value="#{detail.upravit ? 'Upravit' : 'Zavřít'}"></h:commandLink>
-		</h:form>
-	</div>
-	<div id="container">
-		<div id="recept">
-			<img src="#{detail.getPicture(detail.receptDetail)}" alt="recept"
-				width="800" height="600" />
-			<h:outputText rendered="#{detail.upravit}" id="name" value="#{detail.receptDetail.name}" />
-			<h:outputText rendered="#{detail.upravit}" id="description"
-				value="#{detail.receptDetail.description}" />
-                        <h:form rendered="#{!detail.upravit}" style="display: flex; flex-direction: column;">
-                            <h:inputText  value="#{detail.receptDetail.name}"/>
-                            <h:inputTextarea value="#{detail.receptDetail.description}"/>
-                            <h:commandButton value="Upravit" actionListener="#{detail.update()}" />
-                        </h:form>
-		</div>
-	</div>
-</h:body>
+    <h:head>
+        <title>Recepty - #{detail.receptDetail.name}</title>
+        <h:outputStylesheet library="css" name="recepty.css" />
+        <h:outputStylesheet library="css" name="receptDetail.css" />
+    </h:head>
+    <h:body>
+        <div id="actionMenu">
+            <h2>#{detail.receptDetail.name}</h2>
+            <h:form id="actions">
+                <h:commandLink styleClass="actionLink"
+                               action="index?faces-redirect=true" value="Zpět"></h:commandLink>
+                <h:commandLink styleClass="actionLink"
+                               actionListener="#{detail.uprav()}" value="#{detail.upravit ? 'Upravit' : 'Zavřít'}" >                  
+                </h:commandLink>
+            </h:form>
+        </div>
+        <div id="container">
+            <div id="recept">
+                <img src="#{detail.getPicture(detail.receptDetail)}" alt="recept"
+                     width="800" height="600" />
+                <h:outputText rendered="#{detail.upravit}" id="name" value="#{detail.receptDetail.name}" />
+                <h:outputText rendered="#{detail.upravit}" id="description"
+                              value="#{detail.receptDetail.description}" />
+                <h:form rendered="#{!detail.upravit}" style="display: flex; flex-direction: column;">
+                    <h:inputText  value="#{detail.receptDetail.name}"/>
+                    <h:inputTextarea value="#{detail.receptDetail.description}"/>
+                    <h:commandButton value="Upravit" actionListener="#{detail.update()}" />
+                </h:form>
+            </div>
+        </div>
+    </h:body>
 </html>
