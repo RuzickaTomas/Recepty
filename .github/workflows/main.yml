@@ -25,7 +25,5 @@ jobs:
          uses: actions/setup-java@v1
          with:
            java-version: 14
-       - name: Sonar
-         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=recepty
        - name: Build project with Maven
          run: mvn -B package --file pom.xml
