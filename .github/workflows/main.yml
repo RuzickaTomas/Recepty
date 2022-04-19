@@ -17,7 +17,7 @@ jobs:
         # Disabling shallow clone is recommended for improving relevancy of reporting
         fetch-depth: 0
     - name: SonarCloud Scan
-      uses: sSonarSource/sonarcloud-github-action@v1.6
+      uses: SonarSource/sonarcloud-github-action@v1.6
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 
