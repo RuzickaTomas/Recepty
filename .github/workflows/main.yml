@@ -4,9 +4,9 @@ name: Recepty CI
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ master ]
+    branches: [ feature-annotatation ]
   pull_request:
-    branches: [ master ]
+    branches: [ feature-annotatation ]
 
 jobs:
   sonarcloud:
@@ -18,8 +18,10 @@ jobs:
         fetch-depth: 0
     - name: SonarCloud Scan
       uses: SonarSource/sonarcloud-github-action@v1.6
+    - name: Build and analyze
       env:
        SONAR_TOKEN : e61c300655b5cf54a3cc04759f358fb58d2c9b76
+      run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=recepty
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 
