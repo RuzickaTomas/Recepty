@@ -1,10 +1,14 @@
+/home/tomas/Dokumenty/Recepty/src/main/java/cz/project/recepty/view/ReceptDetailView.java
+/home/tomas/Dokumenty/Recepty/src/main/java/cz/project/recepty/service/IReceptService.java
 /home/tomas/Dokumenty/Recepty/src/main/java/cz/project/recepty/ds/Connector.java
 /home/tomas/Dokumenty/Recepty/src/main/java/cz/project/recepty/dao/ObrazkyDAOImpl.java
+/home/tomas/Dokumenty/Recepty/src/main/java/cz/project/recepty/handle/CustomExceptionHandlerFactory.java
 /home/tomas/Dokumenty/Recepty/src/main/java/cz/project/recepty/dao/ReceptyDAO.java
 /home/tomas/Dokumenty/Recepty/src/main/java/cz/project/recepty/dao/ObrazkyDAO.java
 /home/tomas/Dokumenty/Recepty/src/main/java/cz/project/recepty/view/ReceptyView.java
 /home/tomas/Dokumenty/Recepty/src/main/java/cz/project/recepty/rest/ObrazkyServlet.java
 /home/tomas/Dokumenty/Recepty/src/main/java/cz/project/recepty/service/ReceptService.java
+/home/tomas/Dokumenty/Recepty/src/main/java/cz/project/recepty/handle/CustomExceptionHandler.java
 /home/tomas/Dokumenty/Recepty/src/main/java/cz/project/recepty/transform/TransformRecept.java
 /home/tomas/Dokumenty/Recepty/src/main/java/cz/project/recepty/beans/Obrazek.java
 /home/tomas/Dokumenty/Recepty/src/main/java/cz/project/recepty/dao/ReceptyDAOImpl.java

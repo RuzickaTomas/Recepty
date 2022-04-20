@@ -7,9 +7,7 @@ package cz.project.recepty.service;
 import cz.project.recepty.beans.Obrazek;
 import cz.project.recepty.beans.Recept;
 import cz.project.recepty.dao.ObrazkyDAO;
-import cz.project.recepty.dao.ObrazkyDAOImpl;
 import cz.project.recepty.dao.ReceptyDAO;
-import cz.project.recepty.dao.ReceptyDAOImpl;
 import cz.project.recepty.dto.ReceptDTO;
 import cz.project.recepty.transform.TransformRecept;
 import java.io.File;
@@ -17,36 +15,48 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
 import javax.servlet.http.Part;
 
 /**
  *
  *
  */
-public class ReceptService {
+@Stateless(name = "receptService")
+public class ReceptService implements IReceptService {
 
-    private final ReceptyDAO receptyDao;
+    public interface IReceptService {
 
-    private final ObrazkyDAO obrazkyDao;
+	}
+
+	@EJB
+    private ReceptyDAO receptyDao;
+
+    @EJB
+    private ObrazkyDAO obrazkyDao;
 
     public ReceptService() {
-        this.receptyDao = new ReceptyDAOImpl();
-        this.obrazkyDao = new ObrazkyDAOImpl();
+
     }
 
+    @Override
     public long save(ReceptDTO recept) {
         long result = receptyDao.save(TransformRecept.transform(recept));
         return result;
     }
 
+    @Override
     public List<Recept> getRecepty() {
         return receptyDao.getRecepts();
     }
 
+    @Override
     public ReceptDTO getRecept(long receptId) {
         return TransformRecept.transform(receptyDao.getRecept(receptId));
     }
 
+    @Override
     public void uploadFile(Part part, long receptId) throws IOException {
         final String fileName = part.getSubmittedFileName();
         //cesta pro ulozeni obrazku
@@ -68,16 +78,19 @@ public class ReceptService {
         obrazkyDao.save(picture);
     }
 
+    @Override
     public String getPicture(ReceptDTO r) {
         Recept transformed = TransformRecept.transform(r);
         return getPicture(transformed);
     }
-   
+
+    @Override
     public String getPicture(Recept r) {
         Obrazek obr = obrazkyDao.getPictureByReceptId(r.getId());
         return obr == null ? "" : obr.getSrc();
     }
 
+    @Override
     public void remove(Recept recept) {
         if (recept != null) {
             receptyDao.remove(recept.getId());

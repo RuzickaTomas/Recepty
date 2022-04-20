@@ -5,9 +5,13 @@ cz/project/recepty/rest/ObrazkyServlet.class
 cz/project/recepty/dao/ReceptyDAOImpl.class
 cz/project/recepty/dao/ReceptyDAO.class
 cz/project/recepty/service/ReceptService.class
+cz/project/recepty/handle/CustomExceptionHandler.class
+cz/project/recepty/service/IReceptService.class
 cz/project/recepty/beans/Obrazek.class
 cz/project/recepty/transform/TransformRecept.class
 cz/project/recepty/view/ReceptyView.class
 cz/project/recepty/ds/Connector.class
+cz/project/recepty/handle/CustomExceptionHandlerFactory.class
+cz/project/recepty/view/ReceptDetailView.class
 cz/project/recepty/dao/ObrazkyDAOImpl.class
 cz/project/recepty/dao/ObrazkyDAO.class

@@ -1,8 +1,6 @@
 package cz.project.recepty.dao;
 
-import com.mysql.cj.jdbc.MysqlDataSource;
 import cz.project.recepty.beans.Obrazek;
-import cz.project.recepty.ds.Connector;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,15 +9,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import java.sql.Statement;
+import javax.annotation.Resource;
+import javax.ejb.Stateless;
+import javax.sql.DataSource;
+import javax.transaction.Transactional;
 
 /**
  *
  * Třída zajišťující spojení mezi tabulkou pictures
  */
+@Stateless
 public class ObrazkyDAOImpl implements ObrazkyDAO {
 
-    //vytvorime objekt pomoci ktereho se budeme pripojovat do databaze
-    private final MysqlDataSource dataSource = Connector.getInstance().getDataSource();
+    @Resource(lookup = "java:global/recepty/MyDS")
+    private DataSource dataSource;
 
     /**
      * Uloží předaný objekt recept a v závislosti na hodnotě id vytvoří nový
@@ -65,8 +68,8 @@ public class ObrazkyDAOImpl implements ObrazkyDAO {
                 } else {
                     throw new SQLException("Saving picture failed, no ID obtained.");
                 }
-            }    
-        //pokud nastala necekana chyba ve spojeni chytime vyjimku
+            }
+            //pokud nastala necekana chyba ve spojeni chytime vyjimku
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -84,7 +87,7 @@ public class ObrazkyDAOImpl implements ObrazkyDAO {
      * Vrátí záznam podle id
      *
      * @param id - index zaznamu
-     * @return Obrazek 
+     * @return Obrazek
      */
     @Override
     public Obrazek getPicture(long id) {
@@ -161,7 +164,8 @@ public class ObrazkyDAOImpl implements ObrazkyDAO {
     }
 
     /**
-     * Odstranime obrazek podle id 
+     * Odstranime obrazek podle id
+     *
      * @param id - index zaznamu
      */
     @Override
@@ -188,12 +192,15 @@ public class ObrazkyDAOImpl implements ObrazkyDAO {
             }
         }
     }
+
     /**
      * Odstarani obrazek podle id
+     *
      * @param id
      * @return Obrazek nebo null
      */
     @Override
+    @Transactional
     public Obrazek getPictureByReceptId(long id) {
         Obrazek obr = null;
         final String sql = "select * from picture where recept_id = ?";
@@ -202,19 +209,21 @@ public class ObrazkyDAOImpl implements ObrazkyDAO {
             connect.beginRequest();
             statement = connect.prepareStatement(sql);
             statement.setLong(1, id);
-            if (statement.execute()) {
-                ResultSet result = statement.getResultSet();
-                if (result.first()) {
-                    final long idKey = result.getLong("id");
-                    final String path = result.getString("path");
-                    final String src = result.getString("src");
+            //if (statement.execute()) {
+            ResultSet result = statement.executeQuery();
+            if (result.first()) {
+                final long idKey = result.getLong("id");
+                final String path = result.getString("path");
+                final String src = result.getString("src");
+                final long receptId = result.getLong("recept_id");
 
-                    obr = new Obrazek();
-                    obr.setId(idKey);
-                    obr.setPath(path);
-                    obr.setSrc(src);
-                }
+                obr = new Obrazek();
+                obr.setId(idKey);
+                obr.setPath(path);
+                obr.setSrc(src);
+                obr.setRecept_id(receptId);
             }
+            //}
             connect.endRequest();
         } catch (SQLException e) {
             e.printStackTrace();

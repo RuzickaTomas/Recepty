@@ -1,6 +1,5 @@
 package cz.project.recepty.dao;
 
-import com.mysql.cj.jdbc.MysqlDataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,18 +9,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.project.recepty.beans.Recept;
-import cz.project.recepty.ds.Connector;
+import javax.annotation.Resource;
+import javax.ejb.Stateless;
+import javax.sql.DataSource;
+import javax.transaction.Transactional;
 
 /**
  *
  * Třída zajišťující spojení mezi tabulkou recepty
  */
+
+@Stateless
 public class ReceptyDAOImpl implements ReceptyDAO {
 
-    private final MysqlDataSource dataSource = Connector.getInstance().getDataSource();
-
-    public ReceptyDAOImpl() {
-    }
+     @Resource(lookup = "java:global/recepty/MyDS")
+     private DataSource dataSource;
 
     /**
      * Uloží předaný objekt recept a v závislosti na hodnotě id vytvoří nový
@@ -118,12 +120,14 @@ public class ReceptyDAOImpl implements ReceptyDAO {
      * @return List nebo prázdný List
      */
     @Override
+    @Transactional
     public List<Recept> getRecepts() {
         final List<Recept> recepts = new ArrayList<>();
         final String sql = "select * from recept";
         PreparedStatement statement = null;
         try ( Connection connect = dataSource.getConnection()) {
             connect.beginRequest();
+            connect.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
             statement = connect.prepareStatement(sql);
             if (statement.execute()) {
                 ResultSet result = statement.getResultSet();

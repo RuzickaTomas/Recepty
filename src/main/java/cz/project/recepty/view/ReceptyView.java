@@ -6,18 +6,18 @@ package cz.project.recepty.view;
 
 import cz.project.recepty.beans.Recept;
 import cz.project.recepty.dto.ReceptDTO;
-import cz.project.recepty.service.ReceptService;
+import cz.project.recepty.service.IReceptService;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -27,9 +27,9 @@ import javax.servlet.http.Part;
  * Zobrazíme recepty nebo pouze jejich části.
  */
 @ManagedBean(name = "recepty")
-@SessionScoped
+@ViewScoped
 public class ReceptyView implements Serializable {
-    
+
     private static final long serialVersionUID = 64516531564487651L;
 
     private Part pictures;
@@ -40,15 +40,14 @@ public class ReceptyView implements Serializable {
 
     private boolean smazat = false;
 
-    private boolean upravit = false;
-
     private static final Logger logger = Logger.getLogger(ReceptyView.class.getName());
- 
-    private ReceptService service;
+    
+    @EJB
+    private IReceptService service;
 
-    public ReceptyView() {
+    @PostConstruct
+    public void init() {
         this.recept = new ReceptDTO();
-        this.service = new ReceptService();
     }
 
     public ReceptDTO getRecept() {
@@ -87,27 +86,9 @@ public class ReceptyView implements Serializable {
         this.smazat = !this.smazat;
     }
 
-    public void uprav() {
-        this.upravit = !this.upravit;
-    }
-
-    public boolean isUpravit() {
-        return upravit;
-    }
-
-    public void setUpravit(boolean upravit) {
-        this.upravit = upravit;
-    }
-
     public void storno() {
         pictures = null;
         this.recept = new ReceptDTO();
-    }
-
-    public void update() {
-        this.service.save(receptDetail);
-        logger.log(Level.INFO, "Recept " + this.receptDetail.getName() + " by úspěšně upraven!");
-
     }
 
     public String save() {
@@ -150,14 +131,6 @@ public class ReceptyView implements Serializable {
 
     public String getPicture(Recept r) {
         return this.service.getPicture(r);
-    }
-
-    public void openDetail() {
-        FacesContext ctx = FacesContext.getCurrentInstance();
-        Map<String, String> params = ctx.getExternalContext().getRequestParameterMap();
-        Long receptId = Long.parseLong(params.get("receptId"));
-        logger.log(Level.INFO, "redirect to recept id " + receptId + " detail");
-        receptDetail = this.service.getRecept(receptId);
     }
 
     public static Collection<Part> getAllParts(Part part) throws ServletException, IOException {

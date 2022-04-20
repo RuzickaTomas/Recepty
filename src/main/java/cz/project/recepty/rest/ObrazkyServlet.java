@@ -6,11 +6,11 @@ package cz.project.recepty.rest;
 
 import cz.project.recepty.beans.Obrazek;
 import cz.project.recepty.dao.ObrazkyDAO;
-import cz.project.recepty.dao.ObrazkyDAOImpl;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import javax.ejb.EJB;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -22,7 +22,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ObrazkyServlet extends HttpServlet {
 
-    private final ObrazkyDAO obrazkyDao = new ObrazkyDAOImpl();
+    @EJB
+    private ObrazkyDAO obrazkyDao;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
