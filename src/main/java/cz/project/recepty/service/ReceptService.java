@@ -26,7 +26,11 @@ import javax.servlet.http.Part;
 @Stateless(name = "receptService")
 public class ReceptService implements IReceptService {
 
-    @EJB
+    public interface IReceptService {
+
+	}
+
+	@EJB
     private ReceptyDAO receptyDao;
 
     @EJB
