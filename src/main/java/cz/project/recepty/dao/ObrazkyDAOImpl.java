@@ -21,8 +21,12 @@ import javax.transaction.Transactional;
 @Stateless
 public class ObrazkyDAOImpl implements ObrazkyDAO {
 
-    @Resource(lookup = "java:global/recepty/MyDS")
     private DataSource dataSource;
+
+    @Resource(lookup = "java:global/recepty/MyDS")
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     /**
      * Uloží předaný objekt recept a v závislosti na hodnotě id vytvoří nový
@@ -104,10 +108,12 @@ public class ObrazkyDAOImpl implements ObrazkyDAO {
                     final long idKey = result.getLong("id");
                     final String path = result.getString("path");
                     final String src = result.getString("src");
+                    final long receptId = result.getLong("recept_id");
                     obr = new Obrazek();
                     obr.setId(idKey);
                     obr.setPath(path);
                     obr.setSrc(src);
+                    obr.setRecept_id(receptId);
                 }
             }
             connect.endRequest();

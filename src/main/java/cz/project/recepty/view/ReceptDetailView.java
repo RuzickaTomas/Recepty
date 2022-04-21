@@ -7,22 +7,19 @@ package cz.project.recepty.view;
 import cz.project.recepty.beans.Recept;
 import cz.project.recepty.dto.ReceptDTO;
 import cz.project.recepty.service.IReceptService;
-import jakarta.faces.view.ViewScoped;
 import java.io.Serializable;
-import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.bean.ViewScoped;
 import javax.servlet.http.HttpServletRequest;
 
 /**
  *
  */
 @ManagedBean(name = "detail")
-@SessionScoped
+@ViewScoped
 public class ReceptDetailView implements Serializable {
 
     private static final long serialVersionUID = 6598496854978L;
@@ -39,7 +36,11 @@ public class ReceptDetailView implements Serializable {
     @PostConstruct
     public void init() {
         HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        this.receptId = req.getParameter("id");
+        String parameter = req.getParameter("id");
+        if (parameter == null) {
+            parameter = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id");
+        }
+        this.receptId = parameter;
         Long _receptId = Long.parseLong(this.receptId);
 
         // this.service = new ReceptService();

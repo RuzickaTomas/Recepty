@@ -18,12 +18,15 @@ import javax.transaction.Transactional;
  *
  * Třída zajišťující spojení mezi tabulkou recepty
  */
-
 @Stateless
 public class ReceptyDAOImpl implements ReceptyDAO {
 
-     @Resource(lookup = "java:global/recepty/MyDS")
-     private DataSource dataSource;
+    private DataSource dataSource;
+
+    @Resource(lookup = "java:global/recepty/MyDS")
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     /**
      * Uloží předaný objekt recept a v závislosti na hodnotě id vytvoří nový

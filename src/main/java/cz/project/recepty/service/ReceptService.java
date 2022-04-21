@@ -26,18 +26,12 @@ import javax.servlet.http.Part;
 @Stateless(name = "receptService")
 public class ReceptService implements IReceptService {
 
-    public interface IReceptService {
-
-	}
-
-	@EJB
+    
     private ReceptyDAO receptyDao;
 
-    @EJB
     private ObrazkyDAO obrazkyDao;
 
     public ReceptService() {
-
     }
 
     @Override
@@ -89,6 +83,17 @@ public class ReceptService implements IReceptService {
         Obrazek obr = obrazkyDao.getPictureByReceptId(r.getId());
         return obr == null ? "" : obr.getSrc();
     }
+
+    @EJB
+    public void setReceptyDao(ReceptyDAO receptyDao) {
+        this.receptyDao = receptyDao;
+    }
+
+    @EJB
+    public void setObrazkyDao(ObrazkyDAO obrazkyDao) {
+        this.obrazkyDao = obrazkyDao;
+    }    
+    
 
     @Override
     public void remove(Recept recept) {
