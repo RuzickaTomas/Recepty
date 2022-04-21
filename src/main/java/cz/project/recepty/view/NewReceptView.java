@@ -44,12 +44,18 @@ public class NewReceptView implements Serializable {
         this.recept = new ReceptDTO();
     }
 
+    /**
+     * Storno noveho receptu
+     */
     public void storno() {
         pictures = null;
         this.recept = new ReceptDTO();
     }
 
-    //Ulozime nove vytvoreny recept
+    /**
+     * Ulozime nove vytvoreny recept
+     * @return cesta kam budeme prestmerovani - (index.xhtml) 
+     */
     public String save() {
         long result = this.service.save(recept);    //zavolame funkci pro ulozeni
         if (result > 0) {   // pokud se vrati cislo rozdilne od nuly
@@ -60,7 +66,9 @@ public class NewReceptView implements Serializable {
         return "index?faces-redirect=true"; // vratime cil kam chceme prejit
     }
 
-    //Nahrajeme soubory a zaradime je pod id
+    /**
+     * Nahrajeme soubory a zaradime je pod id
+     */
     private void uploadFiles(Long receptId) {
         if (pictures.getSize() > 0) { // zkontrolujeme zda nahraveme neprazdny soubor
             try {

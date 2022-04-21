@@ -23,6 +23,8 @@ public class ObrazkyDAOImpl implements ObrazkyDAO {
 
     private DataSource dataSource;
 
+    private static final String TABLE_NAME = "picture";
+    
     @Resource(lookup = "java:global/recepty/MyDS")
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -37,8 +39,8 @@ public class ObrazkyDAOImpl implements ObrazkyDAO {
      */
     @Override
     public long save(Obrazek obr) {
-        final String insertSql = "insert into picture (id, path, src, recept_id) values (?, ? ,?, ?)";
-        final String updateSql = "update picture set id = ?, path = ?, src = ?, recept_id = ?";
+        final String insertSql = "insert into "+TABLE_NAME+" (id, path, src, recept_id) values (?, ? ,?, ?)";
+        final String updateSql = "update "+TABLE_NAME+" set id = ?, path = ?, src = ?, recept_id = ?";
         long result = 0L;
         PreparedStatement statement = null;
         //vytvorime spojeni s databazi
@@ -96,7 +98,7 @@ public class ObrazkyDAOImpl implements ObrazkyDAO {
     @Override
     public Obrazek getPicture(long id) {
         Obrazek obr = null;
-        final String sql = "select * from picture where id = ?";
+        final String sql = "select * from "+TABLE_NAME+" where id = ?";
         PreparedStatement statement = null;
         try ( Connection connect = dataSource.getConnection()) {
             connect.beginRequest();
@@ -137,7 +139,7 @@ public class ObrazkyDAOImpl implements ObrazkyDAO {
     @Override
     public List<Obrazek> getPictures() {
         final List<Obrazek> pictures = new ArrayList<>();
-        final String sql = "select * from picture";
+        final String sql = "select * from "+TABLE_NAME+"";
         PreparedStatement statement = null;
         try ( Connection connect = dataSource.getConnection()) {
             connect.beginRequest();
@@ -177,7 +179,7 @@ public class ObrazkyDAOImpl implements ObrazkyDAO {
     @Override
     public void remove(long id) {
         Obrazek obr = null;
-        final String sql = "delete from picture where id = ?";
+        final String sql = "delete from "+TABLE_NAME+" where id = ?";
         PreparedStatement statement = null;
         try ( Connection connect = dataSource.getConnection()) {
             connect.beginRequest();
@@ -209,7 +211,7 @@ public class ObrazkyDAOImpl implements ObrazkyDAO {
     @Transactional
     public Obrazek getPictureByReceptId(long id) {
         Obrazek obr = null;
-        final String sql = "select * from picture where recept_id = ?";
+        final String sql = "select * from "+TABLE_NAME+" where recept_id = ?";
         PreparedStatement statement = null;
         try ( Connection connect = dataSource.getConnection()) {
             connect.beginRequest();
