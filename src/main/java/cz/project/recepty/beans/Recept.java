@@ -13,14 +13,11 @@ public class Recept implements Serializable {
     private String name;
     //popis postupu
     private String description;
-    //kategorie
-    private Long kategorieId;
 
-    public Recept(Long id, String name, String description, Long kategorieId) {
+    public Recept(Long id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.kategorieId = kategorieId;
     }
 
     public Long getId() {
@@ -47,19 +44,9 @@ public class Recept implements Serializable {
         this.description = description;
     }
 
-    public Long getKategorieId() {
-        return kategorieId;
-    }
-
-    public void setKategorieId(Long kategorieId) {
-        this.kategorieId = kategorieId;
-    }
-    
-    
-
     @Override
     public int hashCode() {
-        return Objects.hash(description, id, name, kategorieId);
+        return Objects.hash(description, id, name);
     }
 
     @Override
@@ -75,12 +62,12 @@ public class Recept implements Serializable {
         }
         Recept other = (Recept) obj;
         return Objects.equals(description, other.description) && Objects.equals(id, other.id)
-                && Objects.equals(name, other.name) && Objects.equals(kategorieId, other.kategorieId);
+                && Objects.equals(name, other.name);
     }
 
     @Override
     public String toString() {
-        return "Recept [id=" + id + ", name=" + name + ", description=" + description +", kategorieId=" + kategorieId + "]";
+        return "Recept [id=" + id + ", name=" + name + ", description=" + description + "]";
     }
 
 }

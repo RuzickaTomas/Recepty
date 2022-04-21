@@ -14,7 +14,7 @@ import cz.project.recepty.dto.ReceptDTO;
 public class TransformRecept {
     
     public static Recept transform(ReceptDTO from) {
-        Recept to = new Recept(from.getId(), from.getName(), from.getDescription(), from.getKategorieId());
+        Recept to = new Recept(from.getId(), from.getName(), from.getDescription());
         return to;
     }
 
@@ -23,7 +23,6 @@ public class TransformRecept {
         to.setId(from.getId());
         to.setName(from.getName());
         to.setDescription(from.getDescription());
-        to.setKategorieId(from.getKategorieId());
         return to;
     }
 

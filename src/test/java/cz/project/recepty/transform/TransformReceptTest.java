@@ -27,12 +27,11 @@ public class TransformReceptTest {
     @Test
     public void tranformationToEntity() {
         logger.info("test trasformace z entity");
-        Recept expected = new Recept(3L, "TEST", "dobry test", 7L);
+        Recept expected = new Recept(3L, "TEST", "dobry test");
         ReceptDTO from = new ReceptDTO();
         from.setId(3L);
         from.setName("TEST");
         from.setDescription("dobry test");
-        from.setKategorieId(7L);
         logger.info("predani k transformovani");
         Recept result = TransformRecept.transform(from);
         Assert.assertEquals(expected, result);
@@ -45,8 +44,7 @@ public class TransformReceptTest {
         expected.setId(3L);
         expected.setName("TEST");
         expected.setDescription("dobry test");
-        expected.setKategorieId(7L);
-        Recept from = new Recept(3L, "TEST", "dobry test", 7L);
+        Recept from = new Recept(3L, "TEST", "dobry test");
         logger.info("predani k transformovani");
         ReceptDTO result = TransformRecept.transform(from);
         Assert.assertEquals(expected, result);

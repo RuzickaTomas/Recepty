@@ -23,8 +23,6 @@ public class ReceptyDAOImpl implements ReceptyDAO {
 
     private DataSource dataSource;
 
-    private static final String TABLE_NAME = "recept";
-    
     @Resource(lookup = "java:global/recepty/MyDS")
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -39,8 +37,8 @@ public class ReceptyDAOImpl implements ReceptyDAO {
      */
     @Override
     public long save(Recept recept) {
-        final String insertSql = "insert into "+TABLE_NAME+" (id, name, description, kategorie_id) values (?, ?, ?, ?)";
-        final String updateSql = "update "+TABLE_NAME+" set name = ?, description = ?, kategorie_id = ? where id = ? ";
+        final String insertSql = "insert into recept (id, name, description) values (?, ?, ?)";
+        final String updateSql = "update recept set name = ?, description = ? where id = ? ";
         long result = 0L;
         boolean update = false;
         PreparedStatement statement = null;
@@ -49,10 +47,9 @@ public class ReceptyDAOImpl implements ReceptyDAO {
             if (recept.getId() != null) {
                 update = true;
                 statement = connect.prepareStatement(updateSql, Statement.NO_GENERATED_KEYS);
-                statement.setInt(4, recept.getId().intValue());
+                statement.setInt(3, recept.getId().intValue());
                 statement.setString(1, recept.getName());
                 statement.setString(2, recept.getDescription());
-                statement.setLong(3, recept.getKategorieId());
                 result = recept.getId();
             } else {
                 update = false;
@@ -60,7 +57,6 @@ public class ReceptyDAOImpl implements ReceptyDAO {
                 statement.setObject(1, recept.getId());
                 statement.setString(2, recept.getName());
                 statement.setString(3, recept.getDescription());
-                statement.setLong(4, recept.getKategorieId());
             }
             statement.executeUpdate();
             if (!update) {
@@ -68,7 +64,7 @@ public class ReceptyDAOImpl implements ReceptyDAO {
                 if (generatedKeys.next()) {
                     result = generatedKeys.getLong(1);
                 } else {
-                    throw new SQLException("Saving recept failed, no ID obtained.");
+                    throw new SQLException("Saving picture failed, no ID obtained.");
                 }
 
             }
@@ -93,7 +89,7 @@ public class ReceptyDAOImpl implements ReceptyDAO {
     @Override
     public Recept getRecept(long id) {
         Recept recept = null;
-        final String sql = "select * from "+TABLE_NAME+" where id = ?";
+        final String sql = "select * from recept where id = ?";
         PreparedStatement statement = null;
         try ( Connection connect = dataSource.getConnection()) {
             connect.beginRequest();
@@ -105,8 +101,7 @@ public class ReceptyDAOImpl implements ReceptyDAO {
                     final long idKey = result.getLong("id");
                     final String name = result.getString("name");
                     final String description = result.getString("description");
-                    final Long kategorieId = result.getLong("kategorie_id");                   
-                    recept = new Recept(idKey, name, description, kategorieId);
+                    recept = new Recept(idKey, name, description);
                 }
             }
             connect.endRequest();
@@ -131,7 +126,7 @@ public class ReceptyDAOImpl implements ReceptyDAO {
     @Transactional
     public List<Recept> getRecepts() {
         final List<Recept> recepts = new ArrayList<>();
-        final String sql = "select * from "+TABLE_NAME+"";
+        final String sql = "select * from recept";
         PreparedStatement statement = null;
         try ( Connection connect = dataSource.getConnection()) {
             connect.beginRequest();
@@ -143,8 +138,7 @@ public class ReceptyDAOImpl implements ReceptyDAO {
                     final long idKey = result.getLong("id");
                     final String name = result.getString("name");
                     final String description = result.getString("description");
-                    final Long kategorieId = result.getLong("kategorie_id");
-                    recepts.add(new Recept(idKey, name, description, kategorieId));
+                    recepts.add(new Recept(idKey, name, description));
                 }
             }
             connect.endRequest();
@@ -168,7 +162,7 @@ public class ReceptyDAOImpl implements ReceptyDAO {
     @Override
     public void remove(long id) {
         Recept obr = null;
-        final String sql = "delete from "+TABLE_NAME+" where id = ?";
+        final String sql = "delete from recept where id = ?";
         PreparedStatement statement = null;
         try ( Connection connect = dataSource.getConnection()) {
             connect.beginRequest();

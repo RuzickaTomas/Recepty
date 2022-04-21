@@ -51,8 +51,8 @@ public class ReceptServiceTest {
     @Test
     public void testRetrieveRecepts() {
         //co ocekavame 
-        Recept r1 = new Recept(1L, "T1", "popis", 2L);
-        Recept r2 = new Recept(2L, "T2", "popis", 3L);
+        Recept r1 = new Recept(1L, "T1", "popis");
+        Recept r2 = new Recept(2L, "T2", "popis");
         List<Recept> expected = List.of(r1, r2);
 
         when(this.service.getRecepty()).thenReturn(expected);
@@ -87,7 +87,7 @@ public class ReceptServiceTest {
 
     @Test
     public void testPictureRetrieval() {
-        Recept r = new Recept(1L, "name", "description", 3L);
+        Recept r = new Recept(1L, "name", "description");
         String expected = "http://localhost:8080/path";
         when(this.service.getPicture(r)).thenReturn(expected);
         String result = this.service.getPicture(r);
@@ -96,7 +96,7 @@ public class ReceptServiceTest {
 
     @Test
     public void testReceptRemoval() {
-        Recept r = new Recept(1L, "name", "description", 3L);
+        Recept r = new Recept(1L, "name", "description");
         ReceptyDAO dao = mock(ReceptyDAO.class);
         doCallRealMethod().when(this.service).setReceptyDao(dao);
         this.service.setReceptyDao(dao);

@@ -18,7 +18,6 @@ public class ReceptDTO implements Serializable {
     private String name; // název receptu
     private String description; // popis receptu resp. postupu
     private Part files; // soubory (obrázky) které chceme nahrát
-    private Long kategorieId;
 
     public ReceptDTO() {
     }
@@ -55,17 +54,9 @@ public class ReceptDTO implements Serializable {
         this.files = files;
     }
 
-    public Long getKategorieId() {
-        return kategorieId;
-    }
-
-    public void setKategorieId(Long kategorieId) {
-        this.kategorieId = kategorieId;
-    }
-
     @Override
     public int hashCode() {
-        return Objects.hash(description, files, id, name, kategorieId);
+        return Objects.hash(description, files, id, name);
     }
 
     @Override
@@ -81,12 +72,12 @@ public class ReceptDTO implements Serializable {
         }
         ReceptDTO other = (ReceptDTO) obj;
         return Objects.equals(description, other.description) && Objects.equals(files, other.files)
-                && Objects.equals(id, other.id) && Objects.equals(name, other.name) && Objects.equals(kategorieId, other.kategorieId);
+                && Objects.equals(id, other.id) && Objects.equals(name, other.name);
     }
 
     @Override
     public String toString() {
-        return "ReceptDTO{" + "id=" + id + ", name=" + name + ", description=" + description +", kategorieId=" + kategorieId  + '}';
+        return "ReceptDTO{" + "id=" + id + ", name=" + name + ", description=" + description + '}';
     }
 
 }
