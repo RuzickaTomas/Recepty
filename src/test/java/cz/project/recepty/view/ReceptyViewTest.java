@@ -29,7 +29,7 @@ public class ReceptyViewTest {
 
     @Test
     public void testRemoveRecept() {
-        Recept recept = new Recept(3L, "name", "description");
+        Recept recept = new Recept(3L, "name", "description", 7L);
         IReceptService service = mock(IReceptService.class);
         doCallRealMethod().when(view).setService(service);
         view.setService(service);
