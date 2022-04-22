@@ -106,34 +106,37 @@ public class KategorieDAOImpl implements KategorieDAO {
         final String insertSql = "insert into " + TABLE_NAME + " (id, name) values (?, ?)";
         final String updateSql = "update " + TABLE_NAME + " set name = ? where id = ?";
         long result = 0L;
+         boolean update = false;
         PreparedStatement statement = null;
         //vytvorime spojeni s databazi
         try ( Connection connect = dataSource.getConnection()) {
             //rekneme driveru, ze ma ocekavt zahajeni dotazu
             connect.beginRequest();
             if (kategorie.getId() != null) {
+                update = true;
                 //vytvorime prepared statement, zajistime aby bylz prirazeny spravne hodnoty
                 statement = connect.prepareStatement(updateSql);
                 //prirazeni hodnot v zleva do prava
-                statement.setObject(1, kategorie.getId());
-                statement.setString(2, kategorie.getName());
+                statement.setLong(2, kategorie.getId());
+                statement.setString(1, kategorie.getName());
             } else {
+                update = false;
                 //Statement.RETURN_GENERATED_KEYS - chceme aby nam result set vratil vygenerovane id
                 statement = connect.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS);
-                statement.setString(1, kategorie.getName());
-                statement.setLong(2, kategorie.getId());
+                statement.setString(2, kategorie.getName());
+                statement.setObject(1, kategorie.getId());
             }
             //provedeme dotaz
-            statement.execute();
+            statement.executeUpdate();
             //projdeme resultSet pro vygenerovane klice    
-            try ( ResultSet generatedKeys = statement.getGeneratedKeys()) {
-                //pokud obsahuje id
+              if (!update) {
+                ResultSet generatedKeys = statement.getGeneratedKeys();
                 if (generatedKeys.next()) {
-                    //dostaneme id
                     result = generatedKeys.getLong(1);
                 } else {
-                    throw new SQLException("Saving " + TABLE_NAME + " failed, no ID obtained.");
+                    throw new SQLException("Saving "+TABLE_NAME+" failed, no ID obtained.");
                 }
+
             }
             //pokud nastala necekana chyba ve spojeni chytime vyjimku
         } catch (SQLException e) {

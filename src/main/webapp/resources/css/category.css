@@ -1,0 +1,32 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 22. 4. 2022, 9:33:05
+    Author     : tomas
+*/
+@charset "UTF-8";
+
+.errorMsg {
+    color: #d50505;
+    font-weight: bolder;
+}
+
+#container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#createCategoryForm {
+}
+
+.name {
+     margin-left: 5px;
+}
+
+input[type="submit"] {
+    margin-left: 5px;
+}

@@ -8,14 +8,17 @@ import java.util.Objects;
 
 /**
  * Rozdeleni receptu do jednotlivych kategorii
+ *
  * @author tomas
  */
 public class Kategorie {
-    
+
     private Long id;
-    
+
     //nazev kategorie
     private String name;
+
+    private boolean upravit = false;
 
     public Long getId() {
         return id;
@@ -31,6 +34,14 @@ public class Kategorie {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isUpravit() {
+        return upravit;
+    }
+
+    public void setUpravit(boolean upravit) {
+        this.upravit = upravit;
     }
 
     @Override
@@ -63,5 +74,5 @@ public class Kategorie {
     public String toString() {
         return "Kategorie{" + "id=" + id + ", name=" + name + '}';
     }
-    
+
 }

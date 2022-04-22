@@ -9,6 +9,7 @@
 
     <h:head>
         <title>Recepty - #{detail.receptDetail.name}</title>
+        <h:outputStylesheet library="css" name="actions.css" />
         <h:outputStylesheet library="css" name="recepty.css" />
         <h:outputStylesheet library="css" name="receptDetail.css" />
     </h:head>
@@ -22,7 +23,7 @@
                 </h:commandLink>
                 <h:commandLink styleClass="actionLink"
                                action="#{detail.uprav()}" value="#{detail.upravit ? 'Upravit' : 'Zavřít'}" >  
-                     <f:param name="id" value="#{detail.receptId}" />
+                    <f:param name="id" value="#{detail.receptId}" />
                 </h:commandLink>
             </h:form>
         </div>

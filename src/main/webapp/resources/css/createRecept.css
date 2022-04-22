@@ -1,4 +1,4 @@
-@charset "UTF-8";¨
+@charset "UTF-8";
 .errorMsg {
 	color: #d50505;
 	font-weight: bolder;
@@ -13,7 +13,6 @@
 #createReceptForm {
 	display: flex;
 	flex-direction: column;
-	border: 1p solid gray;
 }
 
 input[type="submit"] {

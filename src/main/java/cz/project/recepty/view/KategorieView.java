@@ -7,6 +7,7 @@ package cz.project.recepty.view;
 import cz.project.recepty.beans.Kategorie;
 import cz.project.recepty.service.IKategorieService;
 import java.io.Serializable;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -24,22 +25,17 @@ public class KategorieView implements Serializable {
 
     private Kategorie kategorie;
 
+    private Kategorie detail;
+
+    private List<Kategorie> categories;
+
     @EJB
     private IKategorieService service;
-    
+
     @PostConstruct
     public void init() {
-
-    }
-    
-    public void storno() {
         kategorie = new Kategorie();
-    }
-    
-    public void save() {
-        if (kategorie != null) {
-            service.save(kategorie);
-        }
+        categories = service.getCategories();
     }
 
     public Kategorie getKategorie() {
@@ -48,6 +44,54 @@ public class KategorieView implements Serializable {
 
     public void setKategorie(Kategorie kategorie) {
         this.kategorie = kategorie;
+    }
+
+    public Kategorie getDetail() {
+        return detail;
+    }
+
+    public void setDetail(Kategorie detail) {
+        this.detail = detail;
+    }
+
+    public List<Kategorie> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Kategorie> categories) {
+        this.categories = categories;
+    }
+    
+    public String uprav(Kategorie k) {
+        k.setUpravit(true);
+        this.detail = k;
+        return null;
+    }
+
+    public void storno() {
+        kategorie = new Kategorie();
+    }
+
+    //ulozeni nove kategorie
+    public String save() {
+        if (kategorie != null) {
+            service.save(kategorie);
+        }
+        return null;
+    }
+
+    //ulozeni radku v tabulce
+    public String saveEdit() {
+        if (detail != null) {
+            service.save(detail);
+        }
+        detail.setUpravit(false);
+        return null;
+    }
+
+    public String remove(Long id) {
+        service.remove(id);
+        return null;
     }
 
 }
