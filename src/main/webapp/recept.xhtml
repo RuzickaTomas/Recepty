@@ -29,12 +29,18 @@
         </div>
         <div id="container">
             <div id="recept">
+                <h:outputText rendered="#{detail.upravit}" value="#{detail.receptDetail.kategorieId}" />
                 <img src="#{detail.getPicture(detail.receptDetail)}" alt="recept"
                      width="800" height="600" />
                 <h:outputText rendered="#{detail.upravit}" id="name" value="#{detail.receptDetail.name}" />
                 <h:outputText rendered="#{detail.upravit}" id="description"
                               value="#{detail.receptDetail.description}" />
                 <h:form rendered="#{!detail.upravit}" style="display: flex; flex-direction: column;">
+                    <h:outputLabel>Kategorie</h:outputLabel>
+                    <h:selectOneMenu value="#{detail.receptDetail.kategorieId}">
+                        <f:selectItems value="#{kategorie.categories}" var="cat"
+                                       itemValue="#{cat.id}" itemLabel="#{cat.name}" />
+                    </h:selectOneMenu>  
                     <h:inputText  value="#{detail.receptDetail.name}"/>
                     <h:inputTextarea value="#{detail.receptDetail.description}"/>
                     <h:commandButton value="Upravit" actionListener="#{detail.update()}" >
