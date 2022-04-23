@@ -15,7 +15,7 @@ import javax.ejb.Stateless;
         name = "java:global/recepty/MyDS",
         url= "jdbc:mysql://localhost:3306/test?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
         user = "root", 
-        password = "asd",
+        password = "admin123",
         minPoolSize = 10,
         maxPoolSize = 50)
 @Stateless

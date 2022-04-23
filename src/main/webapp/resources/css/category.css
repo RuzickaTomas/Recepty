@@ -11,6 +11,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 .errorMsg {
     color: #d50505;
     font-weight: bolder;
+    position: absolute;
+    display: block;
 }
 
 #container {
@@ -18,6 +20,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.categories {
+	margin-top:25px;
 }
 
 #createCategoryForm {

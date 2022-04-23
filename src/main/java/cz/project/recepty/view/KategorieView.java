@@ -35,7 +35,7 @@ public class KategorieView implements Serializable {
     @PostConstruct
     public void init() {
         kategorie = new Kategorie();
-        categories = service.getCategories();
+        load();
     }
 
     public Kategorie getKategorie() {
@@ -77,6 +77,7 @@ public class KategorieView implements Serializable {
         if (kategorie != null) {
             service.save(kategorie);
         }
+        load();
         return null;
     }
 
@@ -89,9 +90,13 @@ public class KategorieView implements Serializable {
         return null;
     }
 
-    public String remove(Long id) {
-        service.remove(id);
-        return null;
+    public void remove(Long id) {
+        service.remove(id);  
+        load();
+    }
+    
+    private void load() {
+    	categories = service.getCategories();
     }
 
 }
