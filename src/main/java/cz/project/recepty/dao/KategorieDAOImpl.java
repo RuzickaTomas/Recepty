@@ -47,7 +47,7 @@ public class KategorieDAOImpl implements KategorieDAO {
                 ResultSet result = statement.getResultSet();
                 if (result.first()) {
                     final long idKey = result.getLong("id");
-                    final String name = result.getString("path");
+                    final String name = result.getString("name");
 
                     kat = new Kategorie();
                     kat.setId(idKey);

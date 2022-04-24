@@ -29,7 +29,7 @@
         </div>
         <div id="container">
             <div id="recept">
-                <h:outputText rendered="#{detail.upravit}" value="#{detail.receptDetail.kategorieId}" />
+                <h:outputText rendered="#{detail.upravit}" value="#{detail.getNazevKategorie(detail.receptDetail.kategorieId)}" />
                 <img src="#{detail.getPicture(detail.receptDetail)}" alt="recept"
                      width="800" height="600" />
                 <h:outputText rendered="#{detail.upravit}" id="name" value="#{detail.receptDetail.name}" />

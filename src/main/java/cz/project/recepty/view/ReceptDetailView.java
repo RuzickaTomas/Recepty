@@ -4,8 +4,10 @@
  */
 package cz.project.recepty.view;
 
+import cz.project.recepty.beans.Kategorie;
 import cz.project.recepty.beans.Recept;
 import cz.project.recepty.dto.ReceptDTO;
+import cz.project.recepty.service.IKategorieService;
 import cz.project.recepty.service.IReceptService;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
@@ -28,6 +30,9 @@ public class ReceptDetailView implements Serializable {
 
     @EJB
     private IReceptService service;
+    
+    @EJB
+    private IKategorieService kategorieService;
 
     private boolean upravit;
 
@@ -42,8 +47,6 @@ public class ReceptDetailView implements Serializable {
         }
         this.receptId = parameter;
         Long _receptId = Long.parseLong(this.receptId);
-
-        // this.service = new ReceptService();
         this.receptDetail = this.service.getRecept(_receptId);
     }
 
@@ -85,6 +88,11 @@ public class ReceptDetailView implements Serializable {
 
     public void update() {
         this.service.save(receptDetail);
+    }
+    
+    public String getNazevKategorie(long id) {
+    	Kategorie result = this.kategorieService.getCategory(id);
+    	return result != null ? result.getName() : "Nezaøazeno";
     }
 
 }
