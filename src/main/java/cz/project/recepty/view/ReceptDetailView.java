@@ -13,6 +13,7 @@ import cz.project.recepty.service.IKomentarService;
 import cz.project.recepty.service.IReceptService;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -147,5 +148,12 @@ public class ReceptDetailView implements Serializable {
 		Kategorie result = this.kategorieService.getCategory(id);
 		return result != null ? result.getName() : "Nezaøazeno";
 	}
+	
+	public void report(Komentar kom) {
+		kom.setReported(new Date());
+		this.komentarService.save(kom);
+		loadComments();
+	}
+	
 
 }

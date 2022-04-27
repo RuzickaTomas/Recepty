@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -52,12 +53,18 @@ public class KomentarDAOImpl implements KomentarDAO {
                     final String email = result.getString("email");
                     final String text = result.getString("text");
                     final long receptId = result.getLong("recept_id");
+                    final Date validFrom = result.getDate("validFrom");
+                    final Date validTo = result.getDate("validTo");
+                    final Date reported = result.getDate("reported");
 
                     kom = new Komentar();
                     kom.setId(idKey);
                     kom.setEmail(email);
                     kom.setText(text);
                     kom.setReceptId(receptId);
+                    kom.setValidFrom(validFrom);
+                    kom.setValidTo(validTo);
+                    kom.setReported(reported);
                 }
             }
             connect.endRequest();
@@ -89,13 +96,19 @@ public class KomentarDAOImpl implements KomentarDAO {
                     final String email = result.getString("email");
                     final String text = result.getString("text");
                     final long receptId = result.getLong("recept_id");
+                    final Date validFrom = result.getDate("validFrom");
+                    final Date validTo = result.getDate("validTo");
+                    final Date reported = result.getDate("reported");
                     
-                    Komentar komentar = new Komentar();
-                    komentar.setId(idKey);
-                    komentar.setEmail(email);
-                    komentar.setText(text);
-                    komentar.setReceptId(receptId);
-                    comments.add(komentar);
+                    Komentar kom = new Komentar();
+                    kom.setId(idKey);
+                    kom.setEmail(email);
+                    kom.setText(text);
+                    kom.setReceptId(receptId);
+                    kom.setValidFrom(validFrom);
+                    kom.setValidTo(validTo);
+                    kom.setReported(reported);
+                    comments.add(kom);
                 }
             }
             connect.endRequest();
@@ -113,8 +126,8 @@ public class KomentarDAOImpl implements KomentarDAO {
 
     @Override
     public long save(Komentar komentar)  {
-        final String insertSql = "insert into " + TABLE_NAME + " (id, email, text, recept_id) values (?, ?, ?, ?)";
-        final String updateSql = "update " + TABLE_NAME + " set text = ?, email = ?, recept_id = ? where id = ?";
+        final String insertSql = "insert into " + TABLE_NAME + " (id, email, text, recept_id, validFrom, validTo, reported) values (?, ?, ?, ?, ?, ?, ?)";
+        final String updateSql = "update " + TABLE_NAME + " set text = ?, email = ?, recept_id = ?, validFrom = ?, validTo = ?, reported = ? where id = ?";
         long result = 0L;
          boolean update = false;
         PreparedStatement statement = null;
@@ -127,7 +140,10 @@ public class KomentarDAOImpl implements KomentarDAO {
                 //vytvorime prepared statement, zajistime aby bylz prirazeny spravne hodnoty
                 statement = connect.prepareStatement(updateSql);
                 //prirazeni hodnot v zleva do prava
-                statement.setLong(4, komentar.getId());
+                statement.setLong(7, komentar.getId());
+                statement.setDate(6, convert(komentar.getReported()));
+                statement.setDate(5, convert(komentar.getValidTo()));
+                statement.setDate(4, convert(komentar.getValidFrom()));
                 statement.setLong(3, komentar.getReceptId());
                 statement.setString(2, komentar.getEmail());
                 statement.setString(1, komentar.getText());
@@ -135,6 +151,9 @@ public class KomentarDAOImpl implements KomentarDAO {
                 update = false;
                 //Statement.RETURN_GENERATED_KEYS - chceme aby nam result set vratil vygenerovane id
                 statement = connect.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS);
+                statement.setDate(7, convert(komentar.getReported()));
+                statement.setDate(6, convert(komentar.getValidTo()));
+                statement.setDate(5, convert(komentar.getValidFrom()));
                 statement.setLong(4, komentar.getReceptId());
                 statement.setString(3, komentar.getText());
                 statement.setString(2, komentar.getEmail());
@@ -165,6 +184,14 @@ public class KomentarDAOImpl implements KomentarDAO {
         }
         return result;
     }
+    
+    private java.sql.Date convert(Date date){   	
+    	if (date == null) {
+    		return null;
+    	}
+    	return new java.sql.Date(date.toInstant().toEpochMilli());
+    }
+    
 
     @Override
     public boolean remove(long id) {
@@ -210,13 +237,19 @@ public class KomentarDAOImpl implements KomentarDAO {
 	                    final String email = result.getString("email");
 	                    final String text = result.getString("text");
 	                    final long receptId = result.getLong("recept_id");
+	                    final Date validFrom = result.getDate("validFrom");
+	                    final Date validTo = result.getDate("validTo");
+	                    final Date reported = result.getDate("reported");
 	                    
-	                    Komentar komentar = new Komentar();
-	                    komentar.setId(idKey);
-	                    komentar.setEmail(email);
-	                    komentar.setText(text);
-	                    komentar.setReceptId(receptId);
-	                    comments.add(komentar);
+	                    Komentar kom = new Komentar();
+	                    kom.setId(idKey);
+	                    kom.setEmail(email);
+	                    kom.setText(text);
+	                    kom.setReceptId(receptId);
+	                    kom.setValidFrom(validFrom);
+	                    kom.setValidTo(validTo);
+	                    kom.setReported(reported);
+	                    comments.add(kom);
 	                }
 	            }
 	            connect.endRequest();

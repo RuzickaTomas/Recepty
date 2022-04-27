@@ -48,7 +48,8 @@ public class KomentarService implements IKomentarService {
 
 	@Override
 	public List<Komentar> getCommentsByRecept(long id) {
-		return komentarDAO.getCommentsByRecept(id);
+		final List<Komentar> komentare = komentarDAO.getCommentsByRecept(id);
+		return komentare;
 	}
 
 }

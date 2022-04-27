@@ -13,7 +13,7 @@ import javax.ejb.Stateless;
  */
 @DataSourceDefinition(className = "com.mysql.cj.jdbc.Driver",
         name = "java:global/recepty/MyDS",
-        url= "jdbc:mysql://localhost:3306/test?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
+        url= "jdbc:mysql://localhost:3306/test?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&zeroDateTimeBehavior=convertToNull",
         user = "root", 
         password = "admin123",
         minPoolSize = 10,

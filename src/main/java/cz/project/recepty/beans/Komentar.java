@@ -1,5 +1,6 @@
 package cz.project.recepty.beans;
 
+import java.util.Date;
 import java.util.Objects;
 
 public class Komentar {
@@ -11,6 +12,12 @@ public class Komentar {
 	private String text;
 	//id receptu který komentujeme
 	private Long receptId;
+	//datum schvaleni kometare
+	private Date validFrom;
+	//datum od kdy je neplatny
+	private Date validTo;
+	//datum nahlaseni komentare
+	private Date reported;
 	
 	public Long getId() {
 		return id;
@@ -36,9 +43,32 @@ public class Komentar {
 	public void setReceptId(Long receptId) {
 		this.receptId = receptId;
 	}
+	public Date getValidFrom() {
+		return validFrom;
+	}
+	public void setValidFrom(Date validFrom) {
+		this.validFrom = validFrom;
+	}
+	public Date getValidTo() {
+		return validTo;
+	}
+	public void setValidTo(Date validTo) {
+		this.validTo = validTo;
+	}
+	public Date getReported() {
+		return reported;
+	}
+	public void setReported(Date reported) {
+		this.reported = reported;
+	}
+	
+	public boolean isValidComment() {
+		return reported == null && (validTo == null || validTo.before(new Date()));
+	}
+	
 	@Override
 	public int hashCode() {
-		return Objects.hash(email, id, receptId, text);
+		return Objects.hash(email, id, receptId, reported, text, validFrom, validTo);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -50,12 +80,14 @@ public class Komentar {
 			return false;
 		Komentar other = (Komentar) obj;
 		return Objects.equals(email, other.email) && Objects.equals(id, other.id)
-				&& Objects.equals(receptId, other.receptId) && Objects.equals(text, other.text);
+				&& Objects.equals(receptId, other.receptId) && Objects.equals(reported, other.reported)
+				&& Objects.equals(text, other.text) && Objects.equals(validFrom, other.validFrom)
+				&& Objects.equals(validTo, other.validTo);
 	}
-	
 	@Override
 	public String toString() {
-		return "Comment [id=" + id + ", email=" + email + ", text=" + text + ", receptId=" + receptId + "]";
+		return "Komentar [id=" + id + ", email=" + email + ", text=" + text + ", receptId=" + receptId + ", validFrom="
+				+ validFrom + ", validTo=" + validTo + ", reported=" + reported + "]";
 	}
 	
 	
