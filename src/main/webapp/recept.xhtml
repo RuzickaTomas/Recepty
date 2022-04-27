@@ -71,7 +71,7 @@
 						<h3>#{koment.email}</h3>
 						<h:outputText value="#{koment.text}" />
 					</h:panelGroup>
-					<h:commandLink value="Nahlásit"				
+					<h:commandLink styleClass="report" value="Nahlásit"				
 						action="#{detail.report(koment)}" rendered="#{koment.isValidComment()}" >
 						<f:ajax execute="@form" render="@form" />
 					</h:commandLink>

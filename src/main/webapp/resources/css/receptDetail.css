@@ -37,3 +37,7 @@ input {
 	flex-direction: column;
 }
 
+.report {
+	float: right;
+	clear: left;
+}

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+	<title>Komentáře</title>
+	<h:outputStylesheet library="css" name="actions.css" />
+	<h:outputStylesheet library="css" name="category.css" />
+</h:head>
+<h:body>
+	<style>
+</style>
+
+	<div id="actionMenu">
+		<h2>Komentáře</h2>
+		<h:form id="actions">
+			<h:commandLink styleClass="actionLink"
+				action="index?faces-redirect=true" value="Zpět"></h:commandLink>
+		</h:form>
+	</div>
+	<div id="container">
+		<h:form id="categories" styleClass="categories">
+			<h:dataTable value="#{komentare.komentare}" var="koment">
+				<h:column>
+					<f:facet name="header">ID</f:facet>
+					<h:outputText value="#{koment.id}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">E-mail</f:facet>
+					<h:outputText value="#{koment.email}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Text</f:facet>
+					<h:outputText value="#{koment.text}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Recept</f:facet>
+					<h:outputText value="#{koment.receptId}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Nahlášen</f:facet>
+					<h:outputText value="#{koment.reported}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Platnost Od</f:facet>
+					<h:outputText value="#{koment.validFrom}" />
+				</h:column>
+								<h:column>
+					<f:facet name="header">Platnost do</f:facet>
+					<h:outputText value="#{koment.validTo}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Action</f:facet>
+					<h:commandButton value="Upravit" rendered="#{!komentare.show}"
+						action="#{komentare.edit(koment)}" />
+					<h:commandButton value="Smazat" rendered="#{komentare.show}"
+						action="#{komentare.retain}">
+						<f:ajax event="click" execute="@form" render="@form" />
+					</h:commandButton>
+					<h:commandButton value="Obnovit" rendered="#{komentare.show}"
+						action="#{komentare.revoke}">
+						<f:ajax event="click" execute="@form" render="@form" />
+					</h:commandButton>
+				</h:column>
+			</h:dataTable>
+		</h:form>
+	</div>
+</h:body>
+</html>

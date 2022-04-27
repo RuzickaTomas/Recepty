@@ -1,57 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"    
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-    <h:head>
-        <title>Recepty</title>
-        <h:outputStylesheet library="css" name="actions.css" />
-        <h:outputStylesheet library="css" name="recepty.css"  />
-    </h:head> 
-    <h:body>
+<h:head>
+	<title>Recepty</title>
+	<h:outputStylesheet library="css" name="actions.css" />
+	<h:outputStylesheet library="css" name="recepty.css" />
+</h:head>
+<h:body>
 
-        <div id="actionMenu">
-            <h2>Výpis všech receptů</h2>
-            <h:form id="actions">
-                <h:commandLink styleClass="actionLink" action="createRecept" value="Nový recept"></h:commandLink>
-                <h:commandLink styleClass="actionLink" action="category" value="Kategorie"></h:commandLink>
-                <h:commandLink styleClass="actionLink" action="#{recepty.smaz()}" value="#{!recepty.smazat ? 'Smazat' : 'Zavřít'}" ></h:commandLink>
-            </h:form>
-        </div>
+	<div id="actionMenu">
+		<h2>Výpis všech receptů</h2>
+		<h:form id="actions">
+			<h:commandLink styleClass="actionLink" action="createRecept"
+				value="Nový recept"></h:commandLink>
+			<h:commandLink styleClass="actionLink" action="category"
+				value="Kategorie"></h:commandLink>
+			<h:commandLink styleClass="actionLink" action="comment"
+				value="Komentáře"></h:commandLink>
+			<h:commandLink styleClass="actionLink" action="#{recepty.smaz()}"
+				value="#{!recepty.smazat ? 'Smazat' : 'Zavřít'}"></h:commandLink>
+		</h:form>
+	</div>
 
-        <h:form styleClass="filter">
-            <h:outputLabel for="filter">Kategorie</h:outputLabel>
+	<h:form styleClass="filter">
+		<h:outputLabel for="filter">Kategorie</h:outputLabel>
 
-            <h:selectOneMenu id="filter" value="#{recepty.kategorieId}">
-                <f:selectItem  itemValue="#{null}" itemLabel="Vše"/>
-                <f:selectItems value="#{kategorie.categories}" var="cat"
-                               itemValue="#{cat.id}" itemLabel="#{cat.name}" />          
-            </h:selectOneMenu>
-            <h:commandButton actionListener="#{recepty.filterRecepts()}" value="Filtrovat">
-                <f:ajax event="change" execute="@form" render=":cards" />
-            </h:commandButton>
-        </h:form>
-        <div id="recepts">
-            <h:form id="cards">
-                <!-- vypiseme cyklicky vsechny recepty  -->
-                <ui:repeat id="r" value="#{recepty.getRecepty()}" var="r">
-                    <div class="card">
-                        <h:commandLink rendered="#{recepty.smazat}" actionListener="#{recepty.remove(r)}" title="Smazat #{r.name}">
-                            <div id="remove"></div>
-                        </h:commandLink> 
-                        <!-- pro kazdy recept ziskame obrazek  -->
-                        <img id="picture" src="#{recepty.getPicture(r)}" alt="#{r.id}" width="480" height="320"/>
-                        <!-- tlacitko pro smazani receptu  -->
-                        <div style="margin-top:10px; height: 5px; width: 490px;"></div>
-                        <!-- nazev receptu s odkazem na detail  -->
-                        <a  class="name" href="recept.xhtml?id=#{r.id}" >#{r.name}</a>
-                    </div>
-                </ui:repeat>
-            </h:form>
-        </div>
-    </h:body>
+		<h:selectOneMenu id="filter" value="#{recepty.kategorieId}">
+			<f:selectItem itemValue="#{null}" itemLabel="Vše" />
+			<f:selectItems value="#{kategorie.categories}" var="cat"
+				itemValue="#{cat.id}" itemLabel="#{cat.name}" />
+		</h:selectOneMenu>
+		<h:commandButton actionListener="#{recepty.filterRecepts()}"
+			value="Filtrovat">
+			<f:ajax event="change" execute="@form" render=":cards" />
+		</h:commandButton>
+	</h:form>
+	<div id="recepts">
+		<h:form id="cards">
+			<!-- vypiseme cyklicky vsechny recepty  -->
+			<ui:repeat id="r" value="#{recepty.getRecepty()}" var="r">
+				<div class="card">
+					<h:commandLink rendered="#{recepty.smazat}"
+						actionListener="#{recepty.remove(r)}" title="Smazat #{r.name}">
+						<div id="remove"></div>
+					</h:commandLink>
+					<!-- pro kazdy recept ziskame obrazek  -->
+					<img id="picture" src="#{recepty.getPicture(r)}" alt="#{r.id}"
+						width="480" height="320" />
+					<!-- tlacitko pro smazani receptu  -->
+					<div style="margin-top: 10px; height: 5px; width: 490px;"></div>
+					<!-- nazev receptu s odkazem na detail  -->
+					<a class="name" href="recept.xhtml?id=#{r.id}">#{r.name}</a>
+				</div>
+			</ui:repeat>
+		</h:form>
+	</div>
+</h:body>
 </html>
