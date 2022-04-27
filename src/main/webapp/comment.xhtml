@@ -24,6 +24,12 @@
 		</h:form>
 	</div>
 	<div id="container">
+		<h:form>
+			<h:selectOneMenu value="#{komentare.receptId}">
+				<f:selectItems value="#{recepty.recepty}" var="rec" itemValue="#{rec.id}" itemLabel="#{rec.name}"></f:selectItems>
+			</h:selectOneMenu>
+			<h:commandButton value="Filtrovat" action="#{komentare.filter}" />			
+		</h:form>		
 		<h:form id="categories" styleClass="categories">
 			<h:dataTable value="#{komentare.komentare}" var="koment">
 				<h:column>
@@ -50,19 +56,23 @@
 					<f:facet name="header">Platnost Od</f:facet>
 					<h:outputText value="#{koment.validFrom}" />
 				</h:column>
-								<h:column>
+				<h:column>
 					<f:facet name="header">Platnost do</f:facet>
 					<h:outputText value="#{koment.validTo}" />
 				</h:column>
 				<h:column>
 					<f:facet name="header">Action</f:facet>
-					<h:commandButton value="Upravit" rendered="#{!komentare.show}"
+					<h:commandButton value="Upravit" rendered="#{!koment.show}"
 						action="#{komentare.edit(koment)}" />
-					<h:commandButton value="Smazat" rendered="#{komentare.show}"
+					<h:commandButton value="Storno" rendered="#{koment.show}"
+						action="#{komentare.storno}">
+						<f:ajax event="click" execute="@form" render="@form" />
+					</h:commandButton>
+					<h:commandButton value="Smazat" rendered="#{koment.show}"
 						action="#{komentare.retain}">
 						<f:ajax event="click" execute="@form" render="@form" />
 					</h:commandButton>
-					<h:commandButton value="Obnovit" rendered="#{komentare.show}"
+					<h:commandButton value="Obnovit" rendered="#{koment.show}"
 						action="#{komentare.revoke}">
 						<f:ajax event="click" execute="@form" render="@form" />
 					</h:commandButton>

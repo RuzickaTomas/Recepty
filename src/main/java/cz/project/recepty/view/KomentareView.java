@@ -2,6 +2,7 @@ package cz.project.recepty.view;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -16,17 +17,19 @@ import cz.project.recepty.service.IKomentarService;
 public class KomentareView {
 
 	private Komentar detail;
-	
+
 	private List<Komentar> komentare;
-	
+
+	private Long kategorieId;
+
+	private Long receptId;
+
 	@EJB
 	private IKomentarService service;
-	
-	private boolean show;
 
 	@PostConstruct
 	public void init() {
-		komentare = service.getComments();
+		load();
 	}
 
 	public Komentar getDetail() {
@@ -44,38 +47,61 @@ public class KomentareView {
 	public void setKomentare(List<Komentar> komentare) {
 		this.komentare = komentare;
 	}
-	
-	public boolean isShow() {
-		return show;
+
+	public Long getKategorieId() {
+		return kategorieId;
 	}
 
-	public void setShow(boolean show) {
-		this.show = show;
+	public void setKategorieId(Long kategorieId) {
+		this.kategorieId = kategorieId;
+	}
+
+	public Long getReceptId() {
+		return receptId;
+	}
+
+	public void setReceptId(Long receptId) {
+		this.receptId = receptId;
 	}
 
 	public void edit(Komentar kom) {
 		this.detail = kom;
-		this.show = true;
+		kom.setShow(true);
 	}
-	
+
 	public void revoke() {
 		detail.setReported(null);
-		this.show = false;
+		detail.setValidTo(null);
+		this.detail.setShow(false);
 		save();
 	}
-	
+
 	public void retain() {
 		detail.setValidTo(new Date());
-		this.show = false;
+		this.detail.setShow(false);
 		save();
 	}
-	
+
 	public void storno() {
-		this.show = false;
+		this.detail.setShow(false);
 	}
-	
+
 	public void save() {
 		service.save(detail);
 	}
-	
+
+	public void filter() {
+		List<Komentar> filter = getKomentare().stream().filter(k -> k.getReceptId().equals(this.receptId))
+				.collect(Collectors.toList());
+		if (!filter.isEmpty()) {
+			setKomentare(filter);
+		} else {
+			load();
+		}
+	}
+
+	public void load() {
+		komentare = service.getComments();
+	}
+
 }

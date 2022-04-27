@@ -19,6 +19,8 @@ public class Komentar {
 	//datum nahlaseni komentare
 	private Date reported;
 	
+	private boolean show;
+	
 	public Long getId() {
 		return id;
 	}
@@ -62,8 +64,14 @@ public class Komentar {
 		this.reported = reported;
 	}
 	
+	public boolean isShow() {
+		return show;
+	}
+	public void setShow(boolean show) {
+		this.show = show;
+	}
 	public boolean isValidComment() {
-		return reported == null && (validTo == null || validTo.before(new Date()));
+		return reported == null && (validTo == null || validTo.after(new Date()));
 	}
 	
 	@Override
