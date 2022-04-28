@@ -2,16 +2,19 @@ package cz.project.recepty.view;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.ejb.Singleton;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import cz.project.recepty.beans.Komentar;
 import cz.project.recepty.service.IKomentarService;
 
+@Singleton
 @ManagedBean(name = "komentare")
 @ViewScoped
 public class KomentareView {
@@ -20,9 +23,13 @@ public class KomentareView {
 
 	private List<Komentar> komentare;
 
+	private Set<String> emails;
+
 	private Long kategorieId;
 
-	private Long receptId;
+	private volatile Long receptId;
+
+	private volatile String email;
 
 	@EJB
 	private IKomentarService service;
@@ -64,6 +71,22 @@ public class KomentareView {
 		this.receptId = receptId;
 	}
 
+	public Set<String> getEmails() {
+		return emails;
+	}
+
+	public void setEmails(Set<String> emails) {
+		this.emails = emails;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public void edit(Komentar kom) {
 		this.detail = kom;
 		kom.setShow(true);
@@ -91,17 +114,18 @@ public class KomentareView {
 	}
 
 	public void filter() {
-		List<Komentar> filter = getKomentare().stream().filter(k -> k.getReceptId().equals(this.receptId))
+		load();
+		List<Komentar> filter = getKomentare().stream()
+				.filter(k -> k.getReceptId().equals(this.receptId) && k.getEmail().equals(this.email))
 				.collect(Collectors.toList());
 		if (!filter.isEmpty()) {
 			setKomentare(filter);
-		} else {
-			load();
-		}
+		} 
 	}
 
 	public void load() {
 		komentare = service.getComments();
+		emails = komentare.stream().map(k -> k.getEmail()).collect(Collectors.toSet());
 	}
 
 }

@@ -25,11 +25,20 @@
 	</div>
 	<div id="container">
 		<h:form>
-			<h:selectOneMenu value="#{komentare.receptId}">
-				<f:selectItems value="#{recepty.recepty}" var="rec" itemValue="#{rec.id}" itemLabel="#{rec.name}"></f:selectItems>
+			<h:selectOneMenu value="#{komentare.email}">
+				<f:selectItem itemLabel="Vše" itemValue="#{null}"></f:selectItem>
+				<f:selectItems value="#{komentare.emails}" var="email"
+					itemValue="#{email}" itemLabel="#{email}"></f:selectItems>
 			</h:selectOneMenu>
-			<h:commandButton value="Filtrovat" action="#{komentare.filter}" />			
-		</h:form>		
+			<h:selectOneMenu value="#{komentare.receptId}">
+				<f:selectItem itemLabel="Vše" itemValue="#{null}"></f:selectItem>
+				<f:selectItems value="#{recepty.recepty}" var="rec"
+					itemValue="#{rec.id}" itemLabel="#{rec.name}"></f:selectItems>
+			</h:selectOneMenu>
+			<h:commandButton value="Filtrovat" action="#{komentare.filter}">
+				<f:ajax execute="@form" render="@form :categories" />
+			</h:commandButton>
+		</h:form>
 		<h:form id="categories" styleClass="categories">
 			<h:dataTable value="#{komentare.komentare}" var="koment">
 				<h:column>
