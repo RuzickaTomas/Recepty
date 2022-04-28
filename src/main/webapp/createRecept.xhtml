@@ -2,51 +2,58 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-    <h:head>
-        <title>Recepty - nový</title>
-        <h:outputStylesheet library="css" name="actions.css" />
-        <h:outputStylesheet library="css" name="recepty.css" />
-        <h:outputStylesheet library="css" name="createRecept.css" />
-    </h:head>
-    <h:body>
-        <style>
-        </style>
+<h:head>
+	<title>Recepty - nový</title>
+	<h:outputStylesheet library="css" name="actions.css" />
+	<h:outputStylesheet library="css" name="recepty.css" />
+	<h:outputStylesheet library="css" name="createRecept.css" />
+</h:head>
+<h:body>
+	<style>
+</style>
 
-        <div id="actionMenu">
-            <h2>Nový recept</h2>
-            <h:form id="actions">
-                <h:commandLink styleClass="actionLink" action="index?faces-redirect=true" value="Zpět"></h:commandLink>
-            </h:form>
-        </div>
-        <div id="container">
-            <h:form id="createReceptForm" enctype="multipart/form-data">
-                <h:outputLabel>Kategorie</h:outputLabel>
-                <h:selectOneMenu value="#{createRecept.recept.kategorieId}">
-                    <f:selectItems value="#{kategorie.categories}" var="cat"
-                                   itemValue="#{cat.id}" itemLabel="#{cat.name}" />
-                </h:selectOneMenu>                
-                <h:outputLabel>Název</h:outputLabel>
-                <h:inputText id="name" value="#{createRecept.recept.name}" required="true"
-                             requiredMessage="Název musí být vyplněn" />
-                <h:message for="name" styleClass="errorMsg" />
-                <h:outputLabel>Popis</h:outputLabel>
-                <h:inputTextarea id="description"
-                                 value="#{createRecept.recept.description}" required="true"
-                                 requiredMessage="Popis musí být vyplněn" />
-                <h:message for="description" styleClass="errorMsg" />
-                <h:outputLabel>Obrázky</h:outputLabel>
-                <h:inputFile id="files" value="#{createRecept.pictures}" a:multiple="true">
-                    <f:validator validatorId="fileValidator" />
-                </h:inputFile>
-                <h:message for="files" styleClass="errorMsg" />
-                <h:commandButton actionListener="#{createRecept.storno()}" value="Storno"></h:commandButton>
-                <h:commandButton action="#{createRecept.save()}" value="Uložit"></h:commandButton>
-            </h:form>
-        </div>
-    </h:body>
+	<div id="actionMenu">
+		<h2>Nový recept</h2>
+		<h:form id="actions">
+			<h:commandLink styleClass="actionLink"
+				action="index?faces-redirect=true" value="Zpět"></h:commandLink>
+		</h:form>
+	</div>
+	<div id="container">
+		<h:form id="createReceptForm" enctype="multipart/form-data">
+			<h:outputLabel>Kategorie</h:outputLabel>
+			<h:selectOneMenu value="#{createRecept.recept.kategorieId}">
+				<f:selectItems value="#{kategorie.categories}" var="cat"
+					itemValue="#{cat.id}" itemLabel="#{cat.name}" />
+			</h:selectOneMenu>
+			<h:outputLabel>Název</h:outputLabel>
+			<h:inputText id="name" value="#{createRecept.recept.name}"
+				required="true" requiredMessage="Název musí být vyplněn">
+					<f:validateRegex pattern="^[^'&lt;&gt;\\]+$"></f:validateRegex>
+			</h:inputText>
+			<h:message for="name" styleClass="errorMsg" />
+			<h:outputLabel>Popis</h:outputLabel>
+			<h:inputTextarea id="description"
+				value="#{createRecept.recept.description}" required="true"
+				requiredMessage="Popis musí být vyplněn">
+					<f:validateRegex pattern="^[^'&lt;&gt;\\]+$"></f:validateRegex>
+			</h:inputTextarea>
+			<h:message for="description" styleClass="errorMsg" />
+			<h:outputLabel>Obrázky</h:outputLabel>
+			<h:inputFile id="files" value="#{createRecept.pictures}"
+				a:multiple="true">
+				<f:validator validatorId="fileValidator" />
+			</h:inputFile>
+			<h:message for="files" styleClass="errorMsg" />
+			<h:commandButton actionListener="#{createRecept.storno()}"
+				value="Storno"></h:commandButton>
+			<h:commandButton action="#{createRecept.save()}" value="Uložit"></h:commandButton>
+		</h:form>
+	</div>
+</h:body>
 </html>

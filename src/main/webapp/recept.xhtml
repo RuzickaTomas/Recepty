@@ -44,8 +44,12 @@
 					<f:selectItems value="#{kategorie.categories}" var="cat"
 						itemValue="#{cat.id}" itemLabel="#{cat.name}" />
 				</h:selectOneMenu>
-				<h:inputText value="#{detail.receptDetail.name}" />
-				<h:inputTextarea value="#{detail.receptDetail.description}" />
+				<h:inputText value="#{detail.receptDetail.name}">
+					<f:validateRegex pattern="^[^'&lt;&gt;\\]+$"></f:validateRegex>
+				</h:inputText>
+				<h:inputTextarea value="#{detail.receptDetail.description}">
+					<f:validateRegex pattern="^[^'&lt;&gt;\\]+$"></f:validateRegex>
+				</h:inputTextarea>
 				<h:commandButton value="Upravit" actionListener="#{detail.update()}">
 					<f:param name="id" value="#{detail.receptId}" />
 				</h:commandButton>
@@ -54,11 +58,16 @@
 			<h:form styleClass="comment">
 				<h:outputLabel for="email">E-mail</h:outputLabel>
 				<h:inputText id="email" value="#{detail.komentar.email}"
-					required="true" requiredMessage="E-mail je povinný" />
+					required="true" requiredMessage="E-mail je povinný">
+					<f:validateRegex
+						pattern="^[a-zA-Z0-9_!#$%&amp;'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$" />
+				</h:inputText>
 				<h:message for="email"></h:message>
 				<h:outputLabel for="text">Komentář</h:outputLabel>
 				<h:inputTextarea id="text" value="#{detail.komentar.text}"
-					required="true" requiredMessage="Komentář musí mít text" />
+					required="true" requiredMessage="Komentář musí mít text">
+					<f:validateRegex pattern="^[^'&lt;&gt;\\]+$"></f:validateRegex>
+				</h:inputTextarea>
 				<h:message for="text"></h:message>
 				<h:commandButton value="Storno" action="#{detail.stornoComment}" />
 				<h:commandButton value="Přidat" action="#{detail.comment}">
@@ -71,8 +80,9 @@
 						<h3>#{koment.email}</h3>
 						<h:outputText value="#{koment.text}" />
 					</h:panelGroup>
-					<h:commandLink styleClass="report" value="Nahlásit"				
-						action="#{detail.report(koment)}" rendered="#{koment.isValidComment()}" >
+					<h:commandLink styleClass="report" value="Nahlásit"
+						action="#{detail.report(koment)}"
+						rendered="#{koment.isValidComment()}">
 						<f:ajax execute="@form" render="@form" />
 					</h:commandLink>
 				</ui:repeat>

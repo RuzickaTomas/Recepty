@@ -71,7 +71,7 @@ public class Komentar {
 		this.show = show;
 	}
 	public boolean isValidComment() {
-		return reported == null && (validTo == null || validTo.after(new Date()));
+		return validTo == null || validTo.after(new Date());
 	}
 	
 	@Override

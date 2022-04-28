@@ -28,7 +28,9 @@
 			<h:outputLabel>Název</h:outputLabel>
 			<h:inputText id="name" styleClass="name"
 				value="#{kategorie.kategorie.name}" required="true"
-				requiredMessage="Název musí být vyplněn" />
+				requiredMessage="Název musí být vyplněn">
+				<f:validateRegex pattern="^[^'&lt;&gt;\\]+$"></f:validateRegex>
+			</h:inputText>
 			<h:message for="name" styleClass="errorMsg" />
 			<h:commandButton actionListener="#{kategorie.storno()}"
 				value="Storno"></h:commandButton>

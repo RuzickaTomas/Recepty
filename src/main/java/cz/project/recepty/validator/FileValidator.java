@@ -13,7 +13,7 @@ import javax.faces.validator.ValidatorException;
 import javax.servlet.http.Part;
 
 /**
- * Validujeme soubor, který chceme nahrát
+ * Validujeme soubor, kterĂ˝ chceme nahrĂˇt
  */
 @FacesValidator(value = "fileValidator")
 public class FileValidator implements Validator {
@@ -22,35 +22,35 @@ public class FileValidator implements Validator {
     public void validate(FacesContext arg0, UIComponent arg1, Object arg2) throws ValidatorException {
         Part file = (Part) arg2; 
        
-        int maxSize = 2000000; //max velikost souboru v našem případě je 2MB
+        int maxSize = 2000000; //max velikost souboru v naĹˇem pĹ™Ă­padÄ› je 2MB
         
         FacesMessage message = null;
-        // vytvoříme výchozí zprávu pro případ že soubor není obrázek
+        // vytvoĹ™Ă­me vĂ˝chozĂ­ zprĂˇvu pro pĹ™Ă­pad Ĺľe soubor nenĂ­ obrĂˇzek
         FacesMessage defaultMsg = new FacesMessage("Vyber obrázkový soubor!");
 
         try {
             if (file == null || file.getSize() <= 0 || file.getContentType().isEmpty()) {
-                //v případě že nebyl nahrán žádný soubor vypíšme tuto zprávu
+                //v pĹ™Ă­padÄ› Ĺľe nebyl nahrĂˇn ĹľĂˇdnĂ˝ soubor vypĂ­Ĺˇme tuto zprĂˇvu
                 message = new FacesMessage("Vyber validní soubor!");
             } else if (!file.getContentType().endsWith("jpg")  
             		&& !file.getContentType().endsWith("jpeg")
             		&& !file.getContentType().endsWith("png")
             		&& !file.getContentType().endsWith("gif")) {
-                //pokud se nejedná o soubor typu jpg, jpeg, png nebo gif, vypíšeme výchozí zprávu
+                //pokud se nejednĂˇ o soubor typu jpg, jpeg, png nebo gif, vypĂ­Ĺˇeme vĂ˝chozĂ­ zprĂˇvu
             	message = defaultMsg;
             } else if (file.getSize() > maxSize) {
-                //pokud se pokusíme nahrát příliš velký soubor, budeme varováni touto zprávou
-                message = new FacesMessage("Soubor je příliš velký! Soubor musím mít velikost menší nebo rovno 2 MB.");
+                //pokud se pokusĂ­me nahrĂˇt pĹ™Ă­liĹˇ velkĂ˝ soubor, budeme varovĂˇni touto zprĂˇvou
+                message = new FacesMessage("Soubor je příliš velký! Soubor musí mít velikost menší nebo rovno 2 MB.");
             }
             if (message != null && !message.getDetail().isEmpty()) {
-                //nastavíme úroveň vážnosti zprávy
+                //nastavĂ­me ĂşroveĹ� vĂˇĹľnosti zprĂˇvy
                 message.setSeverity(FacesMessage.SEVERITY_ERROR);
-                //v případě že nastala některá předchozích událostí, vyhodíme vyjímku
+                //v pĹ™Ă­padÄ› Ĺľe nastala nÄ›kterĂˇ pĹ™edchozĂ­ch udĂˇlostĂ­, vyhodĂ­me vyjĂ­mku
                 throw new ValidatorException(message);
             }
 
         } catch (Exception ex) {
-            //pokud nastane neočekávaný stav při validaci zachytíme i tuto vyjímku
+            //pokud nastane neoÄŤekĂˇvanĂ˝ stav pĹ™i validaci zachytĂ­me i tuto vyjĂ­mku
             throw new ValidatorException(new FacesMessage(ex.getMessage()));
         }
 

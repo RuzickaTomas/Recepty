@@ -100,6 +100,7 @@ public class KomentareView {
 	}
 
 	public void retain() {
+		detail.setReported(null);
 		detail.setValidTo(new Date());
 		this.detail.setShow(false);
 		save();
