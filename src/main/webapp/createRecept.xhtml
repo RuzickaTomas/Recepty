@@ -34,14 +34,14 @@
 			<h:outputLabel>Název</h:outputLabel>
 			<h:inputText id="name" value="#{createRecept.recept.name}"
 				required="true" requiredMessage="Název musí být vyplněn">
-					<f:validateRegex pattern="^[^'&lt;&gt;\\]+$"></f:validateRegex>
+					<f:validator validatorId="specialCharsValidator" />
 			</h:inputText>
 			<h:message for="name" styleClass="errorMsg" />
 			<h:outputLabel>Popis</h:outputLabel>
 			<h:inputTextarea id="description"
 				value="#{createRecept.recept.description}" required="true"
 				requiredMessage="Popis musí být vyplněn">
-					<f:validateRegex pattern="^[^'&lt;&gt;\\]+$"></f:validateRegex>
+					<f:validator validatorId="specialCharsValidator" />
 			</h:inputTextarea>
 			<h:message for="description" styleClass="errorMsg" />
 			<h:outputLabel>Obrázky</h:outputLabel>

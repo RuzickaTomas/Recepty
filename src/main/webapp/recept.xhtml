@@ -45,10 +45,10 @@
 						itemValue="#{cat.id}" itemLabel="#{cat.name}" />
 				</h:selectOneMenu>
 				<h:inputText value="#{detail.receptDetail.name}">
-					<f:validateRegex pattern="^[^'&lt;&gt;\\]+$"></f:validateRegex>
+					<f:validator validatorId="specialCharsValidator" />
 				</h:inputText>
 				<h:inputTextarea value="#{detail.receptDetail.description}">
-					<f:validateRegex pattern="^[^'&lt;&gt;\\]+$"></f:validateRegex>
+					<f:validator validatorId="specialCharsValidator" />
 				</h:inputTextarea>
 				<h:commandButton value="Upravit" actionListener="#{detail.update()}">
 					<f:param name="id" value="#{detail.receptId}" />
@@ -59,14 +59,13 @@
 				<h:outputLabel for="email">E-mail</h:outputLabel>
 				<h:inputText id="email" value="#{detail.komentar.email}"
 					required="true" requiredMessage="E-mail je povinný">
-					<f:validateRegex
-						pattern="^[a-zA-Z0-9_!#$%&amp;'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$" />
+							<f:validator validatorId="emailValidator" />
 				</h:inputText>
 				<h:message for="email"></h:message>
 				<h:outputLabel for="text">Komentář</h:outputLabel>
 				<h:inputTextarea id="text" value="#{detail.komentar.text}"
 					required="true" requiredMessage="Komentář musí mít text">
-					<f:validateRegex pattern="^[^'&lt;&gt;\\]+$"></f:validateRegex>
+					<f:validator validatorId="specialCharsValidator" />
 				</h:inputTextarea>
 				<h:message for="text"></h:message>
 				<h:commandButton value="Storno" action="#{detail.stornoComment}" />
