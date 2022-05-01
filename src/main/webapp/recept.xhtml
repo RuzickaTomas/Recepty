@@ -84,6 +84,7 @@
 						rendered="#{koment.isValidComment()}">
 						<f:ajax execute="@form" render="@form" />
 					</h:commandLink>
+					<h:outputText value="Tento komentář již byl nahlášen!" rendered="#{koment.reported != null}" />
 				</ui:repeat>
 			</h:form>
 		</div>

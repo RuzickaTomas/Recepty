@@ -51,6 +51,7 @@ public class ReceptDetailView implements Serializable {
 
 	private List<Komentar> komentare;
 
+
 	@PostConstruct
 	public void init() {
 		// vyhledani parametru
@@ -69,7 +70,7 @@ public class ReceptDetailView implements Serializable {
 		this.komentar = new Komentar();
 		// nacteni receptu
 		this.receptDetail = this.service.getRecept(_receptId);
-		// nacteni  komentaru
+		// nacteni komentaru
 		loadComments();
 	}
 
@@ -128,7 +129,7 @@ public class ReceptDetailView implements Serializable {
 	public void update() {
 		this.service.save(receptDetail);
 	}
-	
+
 	public void stornoComment() {
 		this.komentar = new Komentar();
 	}
@@ -138,8 +139,8 @@ public class ReceptDetailView implements Serializable {
 		this.komentarService.save(komentar);
 		loadComments();
 	}
-	
-	//ujisti se ze je prvne nacteny recept
+
+	// ujisti se ze je prvne nacteny recept
 	private void loadComments() {
 		this.komentare = komentarService.getCommentsByRecept(this.receptDetail.getId());
 	}
@@ -148,12 +149,11 @@ public class ReceptDetailView implements Serializable {
 		Kategorie result = this.kategorieService.getCategory(id);
 		return result != null ? result.getName() : "Nezaøazeno";
 	}
-	
+
 	public void report(Komentar kom) {
-		kom.setReported(new Date());
-		this.komentarService.save(kom);
-		loadComments();
+			kom.setReported(new Date());
+			this.komentarService.save(kom);
+			loadComments();
 	}
-	
 
 }
