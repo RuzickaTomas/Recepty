@@ -8,8 +8,22 @@
 		<div id="actionMenu">
 			<h2>Hlavní stránka</h2>
 			<h:form id="actions"></h:form>
-			<div style="background-color: red; width: 200px; height: 50px;">Admin</div>
+			<div id="admin">Admin</div>
 		</div>
+	</ui:define>
+	<ui:define name="login">
+		<h:form id="login">
+		    <div id="loginInputs">
+			<h:outputLabel for="email">E-mail</h:outputLabel>
+			<h:inputText id="email" value="" />
+			<h:outputLabel for="password">Password</h:outputLabel>
+			<h:inputSecret id="password" value="" />
+			</div>
+			<div id="loginLinks">
+			<h:commandLink value="Reset" />
+			<h:commandButton value="Login"></h:commandButton>
+			</div>
+		</h:form>
 	</ui:define>
 	<ui:define name="content">
 		<div id="recepts">

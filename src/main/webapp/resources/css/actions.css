@@ -9,13 +9,53 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 @charset "UTF-8";
 
 #actionMenu {
+	top: 0;
+	position: fixed;
+	width: 100%;
 	display: flex;
+	background-color: white;
+	z-index: 9;
 }
 
 #actions {
 	height: 60px;
 	display: flex;
 	flex: 3;
+}
+
+#admin {
+	background-color: red;
+	max-width: 250px;
+	min-width: 60px;
+	height: 50px;
+	align-self: center;
+	padding: 5px;
+}
+
+#login {
+	width: 230px;
+	background-color: red;
+	padding: 10px;
+	right: 0;
+	top: 59px;
+	position: fixed;
+	z-index: 9;
+	display: none;
+}
+
+#loginInputs {
+	display: grid;
+	grid-template-columns: 80px 150px;
+	grid-row-gap: 3px;
+	margin-bottom: 5px;
+}
+
+#loginLinks {
+	display: flex;
+}
+
+#loginLinks a {
+	margin-right: 5px;
 }
 
 .actionLink {
@@ -35,5 +75,3 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 .actionLink:hover {
 	border-bottom: 5px solid #d50505;
 }
-
-
