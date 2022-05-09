@@ -1,93 +1,112 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition template="/WEB-INF/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-<h:head>
-	<title>Recepty - #{detail.receptDetail.name}</title>
-	<h:outputStylesheet library="css" name="actions.css" />
-	<h:outputStylesheet library="css" name="recepty.css" />
-	<h:outputStylesheet library="css" name="receptDetail.css" />
-</h:head>
-<h:body>
-	<div id="actionMenu">
-		<h2>#{detail.receptDetail.name}</h2>
-		<h:form id="actions">
-			<h:commandLink styleClass="actionLink"
-				action="index?faces-redirect=true" value="Zpět">
-				<f:param name="id" value="#{detail.receptId}" />
-			</h:commandLink>
-			<h:commandLink styleClass="actionLink" action="#{detail.uprav()}"
-				value="#{detail.upravit ? 'Upravit' : 'Zavřít'}">
-				<f:param name="id" value="#{detail.receptId}" />
-			</h:commandLink>
-		</h:form>
-	</div>
-	<div id="container">
-		<div id="recept">
-			<h:outputText rendered="#{detail.upravit}"
-				value="#{detail.getNazevKategorie(detail.receptDetail.kategorieId)}" />
-			<img src="#{detail.getPicture(detail.receptDetail)}" alt="recept"
-				width="800" height="600" />
-			<h:outputText rendered="#{detail.upravit}" id="name"
-				value="#{detail.receptDetail.name}" />
-			<h:outputText rendered="#{detail.upravit}" id="description"
-				value="#{detail.receptDetail.description}" />
-			<h:form rendered="#{!detail.upravit}"
-				style="display: flex; flex-direction: column;">
-				<h:outputLabel>Kategorie</h:outputLabel>
-				<h:selectOneMenu value="#{detail.receptDetail.kategorieId}">
-					<f:selectItems value="#{kategorie.categories}" var="cat"
-						itemValue="#{cat.id}" itemLabel="#{cat.name}" />
-				</h:selectOneMenu>
-				<h:inputText value="#{detail.receptDetail.name}">
-					<f:validator validatorId="specialCharsValidator" />
-				</h:inputText>
-				<h:inputTextarea value="#{detail.receptDetail.description}">
-					<f:validator validatorId="specialCharsValidator" />
-				</h:inputTextarea>
-				<h:commandButton value="Upravit" actionListener="#{detail.update()}">
+	<ui:define name="header">
+		<title>Recepty - #{detail.receptDetail.name}</title>
+		<h:outputStylesheet library="css" name="actions.css" />
+		<h:outputStylesheet library="css" name="recepty.css" />
+		<h:outputStylesheet library="css" name="receptDetail.css" />
+	</ui:define>
+	<ui:define name="menu">
+		<div id="actionMenu">
+			<h2>#{detail.receptDetail.name}</h2>
+			<h:form id="actions">
+				<h:commandLink styleClass="actionLink"
+					action="index?faces-redirect=true" value="Zpět">
 					<f:param name="id" value="#{detail.receptId}" />
-				</h:commandButton>
+				</h:commandLink>
+				<h:commandLink styleClass="actionLink" action="#{detail.uprav()}"
+					value="#{detail.upravit ? 'Upravit' : 'Zavřít'}">
+					<f:param name="id" value="#{detail.receptId}" />
+				</h:commandLink>
 			</h:form>
-			<h2>Komentáře</h2>
-			<h:form styleClass="comment">
-				<h:outputLabel for="email">E-mail</h:outputLabel>
-				<h:inputText id="email" value="#{detail.komentar.email}"
-					required="true" requiredMessage="E-mail je povinný">
-							<f:validator validatorId="emailValidator" />
-				</h:inputText>
-				<h:message for="email"></h:message>
-				<h:outputLabel for="text">Komentář</h:outputLabel>
-				<h:inputTextarea id="text" value="#{detail.komentar.text}"
-					required="true" requiredMessage="Komentář musí mít text">
-					<f:validator validatorId="specialCharsValidator" />
-				</h:inputTextarea>
-				<h:message for="text"></h:message>
-				<h:commandButton value="Storno" action="#{detail.stornoComment}" />
-				<h:commandButton value="Přidat" action="#{detail.comment}">
-					<f:ajax execute="@form" render="@form :comments" />
-				</h:commandButton>
-			</h:form>
-			<h:form id="comments">
-				<ui:repeat value="#{detail.komentare}" var="koment">
-					<h:panelGroup rendered="#{koment.isValidComment()}">
-						<h3>#{koment.email}</h3>
-						<h:outputText value="#{koment.text}" />
-					</h:panelGroup>
-					<h:commandLink styleClass="report" value="Nahlásit"
-						action="#{detail.report(koment)}"
-						rendered="#{koment.isValidComment()}">
-						<f:ajax execute="@form" render="@form" />
-					</h:commandLink>
-					<h:outputText value="Tento komentář již byl nahlášen!" rendered="#{koment.reported != null}" />
-				</ui:repeat>
-			</h:form>
+			<div id="admin" title="Login">
+				<i class="fa-regular fa-circle-user" style="font-size: 32px;"></i>
+			</div>
 		</div>
+	</ui:define>
+	<ui:define name="login">
+		<h:form id="login">
+			<div id="loginInputs">
+				<h:outputLabel for="email">E-mail</h:outputLabel>
+				<h:inputText id="email" value="" />
+				<h:outputLabel for="password">Password</h:outputLabel>
+				<h:inputSecret id="password" value="" />
+			</div>
+			<div id="loginLinks">
+				<h:commandLink value="Reset" />
+				<h:commandButton value="Login"></h:commandButton>
+			</div>
+		</h:form>
+	</ui:define>
+	<ui:define name="content">
+		<div id="container">
+			<div id="recept">
+				<h:outputText rendered="#{detail.upravit}"
+					value="#{detail.getNazevKategorie(detail.receptDetail.kategorieId)}" />
+				<img src="#{detail.getPicture(detail.receptDetail)}" alt="recept"
+					width="800" height="600" />
+				<h:outputText rendered="#{detail.upravit}" id="name"
+					value="#{detail.receptDetail.name}" />
+				<h:outputText rendered="#{detail.upravit}" id="description"
+					value="#{detail.receptDetail.description}" />
+				<h:form rendered="#{!detail.upravit}"
+					style="display: flex; flex-direction: column;">
+					<h:outputLabel>Kategorie</h:outputLabel>
+					<h:selectOneMenu value="#{detail.receptDetail.kategorieId}">
+						<f:selectItems value="#{kategorie.categories}" var="cat"
+							itemValue="#{cat.id}" itemLabel="#{cat.name}" />
+					</h:selectOneMenu>
+					<h:inputText value="#{detail.receptDetail.name}">
+						<f:validator validatorId="specialCharsValidator" />
+					</h:inputText>
+					<h:inputTextarea value="#{detail.receptDetail.description}">
+						<f:validator validatorId="specialCharsValidator" />
+					</h:inputTextarea>
+					<h:commandButton value="Upravit"
+						actionListener="#{detail.update()}">
+						<f:param name="id" value="#{detail.receptId}" />
+					</h:commandButton>
+				</h:form>
+				<h2>Komentáře</h2>
+				<h:form styleClass="comment">
+					<h:outputLabel for="email">E-mail</h:outputLabel>
+					<h:inputText id="email" value="#{detail.komentar.email}"
+						required="true" requiredMessage="E-mail je povinný">
+						<f:validator validatorId="emailValidator" />
+					</h:inputText>
+					<h:message for="email"></h:message>
+					<h:outputLabel for="text">Komentář</h:outputLabel>
+					<h:inputTextarea id="text" value="#{detail.komentar.text}"
+						required="true" requiredMessage="Komentář musí mít text">
+						<f:validator validatorId="specialCharsValidator" />
+					</h:inputTextarea>
+					<h:message for="text"></h:message>
+					<h:commandButton value="Storno" action="#{detail.stornoComment}" />
+					<h:commandButton value="Přidat" action="#{detail.comment}">
+						<f:ajax execute="@form" render="@form :comments" />
+					</h:commandButton>
+				</h:form>
+				<h:form id="comments">
+					<ui:repeat value="#{detail.komentare}" var="koment">
+						<h:panelGroup rendered="#{koment.isValidComment()}">
+							<h3>#{koment.email}</h3>
+							<h:outputText value="#{koment.text}" />
+						</h:panelGroup>
+						<h:commandLink styleClass="report" value="Nahlásit"
+							action="#{detail.report(koment)}"
+							rendered="#{koment.isValidComment()}">
+							<f:ajax execute="@form" render="@form" />
+						</h:commandLink>
+						<h:outputText value="Tento komentář již byl nahlášen!"
+							rendered="#{koment.reported != null}" />
+					</ui:repeat>
+				</h:form>
+			</div>
 
-	</div>
-</h:body>
-</html>
+		</div>
+	</ui:define>
+</ui:composition>

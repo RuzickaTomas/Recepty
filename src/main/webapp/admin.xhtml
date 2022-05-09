@@ -4,6 +4,11 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	<ui:define name="header">
+		<title><ui:define name="title">Recepty</ui:define></title>
+		<h:outputStylesheet library="css" name="actions.css" />
+		<h:outputStylesheet library="css" name="recepty.css" />
+	</ui:define>
 	<ui:define name="menu">
 		<div id="actionMenu">
 			<h2>Výpis všech receptů</h2>
@@ -17,6 +22,9 @@
 				<h:commandLink styleClass="actionLink" action="#{recepty.smaz()}"
 					value="#{!recepty.smazat ? 'Smazat' : 'Zavřít'}"></h:commandLink>
 			</h:form>
+		</div>
+		<div id="admin" title="Login">
+			<i class="fa-regular fa-circle-user" style="font-size: 32px;"></i>
 		</div>
 	</ui:define>
 	<ui:define name="content">

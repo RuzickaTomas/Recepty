@@ -35,6 +35,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 }
 
 #admin:hover {
+	cursor: pointer;
 	border-bottom: 5px solid #d50505;
 	color: #d50505;
 }

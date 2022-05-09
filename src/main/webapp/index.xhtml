@@ -4,24 +4,31 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	<ui:define name="header">
+		<title><ui:define name="title">Recepty</ui:define></title>
+		<h:outputStylesheet library="css" name="actions.css" />
+		<h:outputStylesheet library="css" name="recepty.css" />
+	</ui:define>
 	<ui:define name="menu">
 		<div id="actionMenu">
 			<h2>Hlavní stránka</h2>
 			<h:form id="actions"></h:form>
-			<div id="admin" title="Login"><i class="fa-regular fa-circle-user" style="font-size:32px;"></i></div>
+			<div id="admin" title="Login">
+				<i class="fa-regular fa-circle-user" style="font-size: 32px;"></i>
+			</div>
 		</div>
 	</ui:define>
 	<ui:define name="login">
 		<h:form id="login">
-		    <div id="loginInputs">
-			<h:outputLabel for="email">E-mail</h:outputLabel>
-			<h:inputText id="email" value="" />
-			<h:outputLabel for="password">Password</h:outputLabel>
-			<h:inputSecret id="password" value="" />
+			<div id="loginInputs">
+				<h:outputLabel for="email">E-mail</h:outputLabel>
+				<h:inputText id="email" value="" />
+				<h:outputLabel for="password">Password</h:outputLabel>
+				<h:inputSecret id="password" value="" />
 			</div>
 			<div id="loginLinks">
-			<h:commandLink value="Reset" />
-			<h:commandButton value="Login"></h:commandButton>
+				<h:commandLink value="Reset" />
+				<h:commandButton value="Login"></h:commandButton>
 			</div>
 		</h:form>
 	</ui:define>
