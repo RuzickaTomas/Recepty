@@ -84,3 +84,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 .actionLink:hover {
 	border-bottom: 5px solid #d50505;
 }
+
+.frame {
+	margin-top: 5%;
+}

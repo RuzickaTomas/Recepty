@@ -36,48 +36,50 @@
 		</h:form>
 	</ui:define>
 	<ui:define name="content">
-		<div id="container">
-			<h:form id="createCategoryForm" enctype="multipart/form-data">
-				<h:outputLabel>Název</h:outputLabel>
-				<h:inputText id="name" styleClass="name"
-					value="#{kategorie.kategorie.name}" required="true"
-					requiredMessage="Název musí být vyplněn">
-					<f:validator validatorId="specialCharsValidator" />
-				</h:inputText>
-				<h:message for="name" styleClass="errorMsg" />
-				<h:commandButton actionListener="#{kategorie.storno()}"
-					value="Storno"></h:commandButton>
-				<h:commandButton action="#{kategorie.save()}" value="Uložit">
-					<f:ajax event="click" execute="@form" render="@form :categories" />
-				</h:commandButton>
-			</h:form>
+		<div class="frame">
+			<div id="container">
+				<h:form id="createCategoryForm" enctype="multipart/form-data">
+					<h:outputLabel>Název</h:outputLabel>
+					<h:inputText id="name" styleClass="name"
+						value="#{kategorie.kategorie.name}" required="true"
+						requiredMessage="Název musí být vyplněn">
+						<f:validator validatorId="specialCharsValidator" />
+					</h:inputText>
+					<h:message for="name" styleClass="errorMsg" />
+					<h:commandButton actionListener="#{kategorie.storno()}"
+						value="Storno"></h:commandButton>
+					<h:commandButton action="#{kategorie.save()}" value="Uložit">
+						<f:ajax event="click" execute="@form" render="@form :categories" />
+					</h:commandButton>
+				</h:form>
 
-			<h:form id="categories" styleClass="categories">
-				<h:dataTable value="#{kategorie.categories}" var="category">
-					<h:column>
-						<f:facet name="header">ID</f:facet>
-						<h:outputText value="#{category.id}" />
-					</h:column>
-					<h:column>
-						<f:facet name="header">Name</f:facet>
-						<h:outputText rendered="#{!category.upravit}"
-							value="#{category.name}" />
-						<h:inputText rendered="#{category.upravit}"
-							value="#{kategorie.detail.name}" />
-					</h:column>
-					<h:column>
-						<f:facet name="header">Action</f:facet>
-						<h:commandButton value="Upravit" rendered="#{!category.upravit}"
-							action="#{kategorie.uprav(category)}" />
-						<h:commandButton value="Uložit" rendered="#{category.upravit}"
-							action="#{kategorie.saveEdit()}" />
-						<h:commandButton value="Smazat"
-							action="#{kategorie.remove(category.id)}">
-							<f:ajax event="click" execute="@form" render="@form" />
-						</h:commandButton>
-					</h:column>
-				</h:dataTable>
-			</h:form>
+				<h:form id="categories" styleClass="categories">
+					<h:dataTable value="#{kategorie.categories}" var="category">
+						<h:column>
+							<f:facet name="header">ID</f:facet>
+							<h:outputText value="#{category.id}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">Name</f:facet>
+							<h:outputText rendered="#{!category.upravit}"
+								value="#{category.name}" />
+							<h:inputText rendered="#{category.upravit}"
+								value="#{kategorie.detail.name}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">Action</f:facet>
+							<h:commandButton value="Upravit" rendered="#{!category.upravit}"
+								action="#{kategorie.uprav(category)}" />
+							<h:commandButton value="Uložit" rendered="#{category.upravit}"
+								action="#{kategorie.saveEdit()}" />
+							<h:commandButton value="Smazat"
+								action="#{kategorie.remove(category.id)}">
+								<f:ajax event="click" execute="@form" render="@form" />
+							</h:commandButton>
+						</h:column>
+					</h:dataTable>
+				</h:form>
+			</div>
 		</div>
 	</ui:define>
 </ui:composition>

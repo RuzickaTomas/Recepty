@@ -7,6 +7,7 @@
 	<ui:define name="header">
 		<title><ui:define name="title">Recepty</ui:define></title>
 		<h:outputStylesheet library="css" name="actions.css" />
+		<h:outputStylesheet library="css" name="customSelect.css" />
 		<h:outputStylesheet library="css" name="recepty.css" />
 	</ui:define>
 	<ui:define name="menu">
@@ -33,21 +34,23 @@
 		</h:form>
 	</ui:define>
 	<ui:define name="content">
-		<div id="recepts">
-			<h:form id="cards">
-				<!-- vypiseme cyklicky vsechny recepty  -->
-				<ui:repeat id="r" value="#{recepty.getRecepty()}" var="r">
-					<div class="card">
-						<!-- pro kazdy recept ziskame obrazek  -->
-						<img id="picture" src="#{recepty.getPicture(r)}" alt="#{r.id}"
-							width="480" height="320" />
-						<!-- tlacitko pro smazani receptu  -->
-						<div style="margin-top: 10px; height: 5px; width: 490px;"></div>
-						<!-- nazev receptu s odkazem na detail  -->
-						<a class="name" href="recept.xhtml?id=#{r.id}">#{r.name}</a>
-					</div>
-				</ui:repeat>
-			</h:form>
+		<div class="frame">
+			<div id="recepts">
+				<h:form id="cards">
+					<!-- vypiseme cyklicky vsechny recepty  -->
+					<ui:repeat id="r" value="#{recepty.getRecepty()}" var="r">
+						<div class="card">
+							<!-- pro kazdy recept ziskame obrazek  -->
+							<img id="picture" src="#{recepty.getPicture(r)}" alt="#{r.id}"
+								width="480" height="320" />
+							<!-- tlacitko pro smazani receptu  -->
+							<div style="margin-top: 10px; height: 5px; width: 490px;"></div>
+							<!-- nazev receptu s odkazem na detail  -->
+							<a class="name" href="recept.xhtml?id=#{r.id}">#{r.name}</a>
+						</div>
+					</ui:repeat>
+				</h:form>
+			</div>
 		</div>
 	</ui:define>
 </ui:composition>

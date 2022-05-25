@@ -7,6 +7,7 @@
 	<ui:define name="header">
 		<title><ui:define name="title">Admin</ui:define></title>
 		<h:outputStylesheet library="css" name="actions.css" />
+		<h:outputStylesheet library="css" name="customSelect.css" />
 		<h:outputStylesheet library="css" name="recepty.css" />
 	</ui:define>
 	<ui:define name="menu">
@@ -28,38 +29,41 @@
 		</div>
 	</ui:define>
 	<ui:define name="content">
-		<h:form styleClass="filter">
-			<h:outputLabel for="filter">Kategorie</h:outputLabel>
+		<div class="frame">
+			<h:form styleClass="filter">
+				<h:outputLabel for="filter">Kategorie</h:outputLabel>
 
-			<h:selectOneMenu id="filter" value="#{recepty.kategorieId}">
-				<f:selectItem itemValue="#{null}" itemLabel="Vše" />
-				<f:selectItems value="#{kategorie.categories}" var="cat"
-					itemValue="#{cat.id}" itemLabel="#{cat.name}" />
-			</h:selectOneMenu>
-			<h:commandButton actionListener="#{recepty.filterRecepts()}"
-				value="Filtrovat">
-				<f:ajax event="change" execute="@form" render=":cards" />
-			</h:commandButton>
-		</h:form>
-		<div id="recepts">
-			<h:form id="cards">
-				<!-- vypiseme cyklicky vsechny recepty  -->
-				<ui:repeat id="r" value="#{recepty.getRecepty()}" var="r">
-					<div class="card">
-						<h:commandLink rendered="#{recepty.smazat}"
-							actionListener="#{recepty.remove(r)}" title="Smazat #{r.name}">
-							<div id="remove"></div>
-						</h:commandLink>
-						<!-- pro kazdy recept ziskame obrazek  -->
-						<img id="picture" src="#{recepty.getPicture(r)}" alt="#{r.id}"
-							width="480" height="320" />
-						<!-- tlacitko pro smazani receptu  -->
-						<div style="margin-top: 10px; height: 5px; width: 490px;"></div>
-						<!-- nazev receptu s odkazem na detail  -->
-						<a class="name" href="recept.xhtml?id=#{r.id}">#{r.name}</a>
-					</div>
-				</ui:repeat>
+				<h:selectOneMenu id="filter" styleClass="custom-select"
+					value="#{recepty.kategorieId}">
+					<f:selectItem itemValue="#{null}" itemLabel="Vše" />
+					<f:selectItems value="#{kategorie.categories}" var="cat"
+						itemValue="#{cat.id}" itemLabel="#{cat.name}" />
+				</h:selectOneMenu>
+				<h:commandButton actionListener="#{recepty.filterRecepts()}"
+					value="Filtrovat">
+					<f:ajax event="change" execute="@form" render=":cards" />
+				</h:commandButton>
 			</h:form>
+			<div id="recepts">
+				<h:form id="cards">
+					<!-- vypiseme cyklicky vsechny recepty  -->
+					<ui:repeat id="r" value="#{recepty.getRecepty()}" var="r">
+						<div class="card">
+							<h:commandLink rendered="#{recepty.smazat}"
+								actionListener="#{recepty.remove(r)}" title="Smazat #{r.name}">
+								<div id="remove"></div>
+							</h:commandLink>
+							<!-- pro kazdy recept ziskame obrazek  -->
+							<img id="picture" src="#{recepty.getPicture(r)}" alt="#{r.id}"
+								width="480" height="320" />
+							<!-- tlacitko pro smazani receptu  -->
+							<div style="margin-top: 10px; height: 5px; width: 490px;"></div>
+							<!-- nazev receptu s odkazem na detail  -->
+							<a class="name" href="recept.xhtml?id=#{r.id}">#{r.name}</a>
+						</div>
+					</ui:repeat>
+				</h:form>
+			</div>
 		</div>
 	</ui:define>
 </ui:composition>
